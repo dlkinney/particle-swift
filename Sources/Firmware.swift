@@ -104,6 +104,45 @@ extension BinaryInfo.Size: Comparable {
     }
 }
 
+/// A build issue (error or warning) that happens during compilation
+public struct BuildIssue {
+    
+    /// The type of issue
+    ///
+    /// - warning: a non-fatal warning
+    /// - error: a fatal error that prevents compilation
+    public enum IssueType: String {
+        case warning
+        case error
+    }
+    /// The issue type
+    public var type: IssueType
+    
+    /// The filename containing the issue
+    public var filename: String = ""
+    /// The line number of the issue
+    public var line: Int = 0
+    
+    /// The column number of hte issue
+    public var column: Int = 0
+    
+    /// A message describing the issue
+    public var message: String = ""
+}
+
+extension BuildIssue: CustomStringConvertible {
+    public var description: String {
+        return "\(filename):\(line):\(column): \(type.rawValue): \(message)"
+    }
+}
+
+extension BuildIssue: Equatable {
+    
+    public static func ==(lhs: BuildIssue, rhs: BuildIssue) -> Bool {
+        return lhs.type == rhs.type && lhs.filename == rhs.filename && lhs.line == rhs.line && lhs.column == rhs.column && lhs.message == rhs.message
+    }
+}
+
 
 /// The result of a compilation web service invocation. 
 ///
@@ -114,7 +153,7 @@ extension BinaryInfo.Size: Comparable {
 /// - compileFailure: The sources failed to compiled.  Associated values include output, stdout, and errors
 public enum BuildResult {
     case compileSuccess(BinaryInfo)
-    case compileFailure(output: String, stdout: String, errors: [String])
+    case compileFailure(output: String, stdout: String, errors: [String], issues: [BuildIssue])
 }
 
 
@@ -208,7 +247,67 @@ extension ParticleCloud {
                             let buildResult = BinaryInfo(binaryId: binary_id, binaryUrl: binary_url, expires: expires, sizeInfo: si)
                             completion(.success(.compileSuccess(buildResult)))
                         } else {
-                            let result: BuildResult = .compileFailure(output: j["output"] as? String ?? "", stdout: j["stdout"] as? String ?? "", errors: j["errors"] as? [String] ?? [])
+                            
+                            let errors =  j["errors"] as? [String] ?? []
+                            var buildIssues = [BuildIssue]()
+                            
+                            // ([^:]+):(\d+):(\d+):\s*(\w+):\s*(.*)
+                            let regex = "([^:]+):(\\d+):(\\d+):\\s*(\\w+):\\s*(.*)"
+                            let exp = try! NSRegularExpression(pattern: regex, options: [])
+
+                            for error in errors {
+                                for line in error.components(separatedBy: .newlines) {
+                                    let matches = exp.matches(in: line, options: [], range: NSMakeRange(0, line.utf16.count))
+                                    
+                                    if matches.isEmpty {
+                                        
+                                        if var issue = buildIssues.last {
+                                            issue.message += "\n" + line
+                                            buildIssues.removeLast()
+                                            buildIssues.append(issue)
+                                        }
+                                        continue
+                                    }
+                                    
+                                    if let links = matches.flatMap({ result -> (String, Int, Int, BuildIssue.IssueType, String)? in
+                                        let r1 = result.rangeAt(1)
+                                        let start1 = String.UTF16Index(r1.location)
+                                        let end1 = String.UTF16Index(r1.location + r1.length)
+                                        let filename = String(line.utf16[start1..<end1])
+                                        
+                                        let r2 = result.rangeAt(2)
+                                        let start2 = String.UTF16Index(r2.location)
+                                        let end2 = String.UTF16Index(r2.location + r2.length)
+                                        let lineNo = String(line.utf16[start2..<end2])
+                                        
+                                        let r3 = result.rangeAt(3)
+                                        let start3 = String.UTF16Index(r3.location)
+                                        let end3 = String.UTF16Index(r3.location + r3.length)
+                                        let column = String(line.utf16[start3..<end3])
+                                        
+                                        
+                                        let r4 = result.rangeAt(4)
+                                        let start4 = String.UTF16Index(r4.location)
+                                        let end4 = String.UTF16Index(r4.location + r4.length)
+                                        let kind = String(line.utf16[start4..<end4])
+                                        
+                                        let r5 = result.rangeAt(5)
+                                        let start5 = String.UTF16Index(r5.location)
+                                        let end5 = String.UTF16Index(r5.location + r5.length)
+                                        let message = String(line.utf16[start5..<end5])
+                                        
+                                        guard let f = filename, let l1 = lineNo, let l = Int(l1), let c2 = column, let c = Int(c2),let k2 = kind, let k = BuildIssue.IssueType(rawValue: k2), let m = message  else { print("here");  return nil }
+                                        
+                                        return (f, l, c, k, m)
+                                    }).first {
+                                        let buildIssue = BuildIssue(type: links.3, filename: links.0, line: links.1, column:links.2 , message: links.4)
+                                        buildIssues.append(buildIssue)
+                                    }
+                                    
+                                }
+                            }
+
+                            let result: BuildResult = .compileFailure(output: j["output"] as? String ?? "", stdout: j["stdout"] as? String ?? "", errors:errors, issues: buildIssues)
                             completion(.success(result))
                         }
                     } else {
