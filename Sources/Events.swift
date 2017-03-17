@@ -1,6 +1,6 @@
 // This source file is part of the vakoc.com open source project(s)
 //
-// Copyright © 2016 Mark Vakoc. All rights reserved.
+// Copyright © 2016, 2017 Mark Vakoc. All rights reserved.
 // Licensed under Apache License v2.0
 //
 // See http://www.vakoc.com/LICENSE.txt for license information
@@ -392,9 +392,9 @@ public class EventSource: NSObject {
                     scanner.scanCharacters(from: .whitespacesAndNewlines, into: nil)
                     
                     parseState = .pendingEventTag
-                    guard let json = json as? String else { break }
+                    guard let json = json as String? else { break }
                     let data = json.data(using: .utf8)
-                    if let nextEvent = nextEvent as? String, let data = data, let parsedJson = try? JSONSerialization.jsonObject(with: data, options: []) as? Dictionary<String,Any>, var j = parsedJson, let event = Event(name: nextEvent, dictionary: j) {
+                    if let nextEvent = nextEvent as String?, let data = data, let parsedJson = try? JSONSerialization.jsonObject(with: data, options: []) as? Dictionary<String,Any>, var j = parsedJson, let event = Event(name: nextEvent, dictionary: j) {
                         trace("Received event \(nextEvent) with payload \(j)")
                         j["name"] = nextEvent
                         NotificationCenter.default.post(name: .ParticleEvent, object: self, userInfo: [EventSource.ParticleEventKey : event])

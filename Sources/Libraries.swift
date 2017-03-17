@@ -116,8 +116,8 @@ extension ParticleCloud {
             case .success(let accessToken):
                 
                 var url = self.baseURL.appendingPathComponent("v1/libraries")
-                if filter != nil, !filter!.isEmpty {
-                    url = url.appendingPathComponent("/\(filter!.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed))")
+                if filter != nil, !filter!.isEmpty, let filterString = filter!.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) {
+                    url = url.appendingPathComponent("/\(filterString)")
                 }
                 
                 var urlComps = URLComponents(url: url, resolvingAgainstBaseURL: false)
