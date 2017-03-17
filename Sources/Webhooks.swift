@@ -1,6 +1,6 @@
 // This source file is part of the vakoc.com open source project(s)
 //
-// Copyright © 2016 Mark Vakoc. All rights reserved.
+// Copyright © 2016, 2017 Mark Vakoc. All rights reserved.
 // Licensed under Apache License v2.0
 //
 // See http://www.vakoc.com/LICENSE.txt for license information
@@ -376,7 +376,7 @@ extension ParticleCloud {
                         let message = data != nil ? String(data: data!, encoding: String.Encoding.utf8) ?? "" : ""
                         warn("failed to create webhook with response: \(String(describing: response)) and message body \(message)")
                         
-                        return completion(.failure(ParticleError.createWebhookFailed(ParticleError.httpReponseParseFailed(message))))
+                        return completion(.failure(ParticleError.createWebhookFailed(ParticleError.httpResponseParseFailed(message))))
                     }
                 }
                 task.resume()
@@ -417,7 +417,7 @@ extension ParticleCloud {
                         let message = data != nil ? String(data: data!, encoding: String.Encoding.utf8) ?? "" : ""
                         warn("failed to delete webhook \(webhookID) with response: \(String(describing:response)) and message body \(message)")
                         
-                        return completion(.failure(ParticleError.deleteWebhookFailed(webhookID, ParticleError.httpReponseParseFailed(message))))
+                        return completion(.failure(ParticleError.deleteWebhookFailed(webhookID, ParticleError.httpResponseParseFailed(message))))
                     }
                 }
                 task.resume()
@@ -460,7 +460,7 @@ extension ParticleCloud {
                         
                         let message = data != nil ? String(data: data!, encoding: String.Encoding.utf8) ?? "" : ""
                         warn("failed to get webhook \(webhookID) with response: \(String(describing: response)) and message body \(message)")
-                        return completion(.failure(ParticleError.webhookGetFailed(webhookID, ParticleError.httpReponseParseFailed(message))))
+                        return completion(.failure(ParticleError.webhookGetFailed(webhookID, ParticleError.httpResponseParseFailed(message))))
                     }
                 }
                 task.resume()
@@ -501,7 +501,7 @@ extension ParticleCloud {
                         
                         let message = data != nil ? String(data: data!, encoding: String.Encoding.utf8) ?? "" : ""
                         warn("failed to list all webhooks with response: \(String(describing: response)) and message body \(String(describing: message))")
-                        return completion(.failure(ParticleError.webhookListFailed(ParticleError.httpReponseParseFailed(message))))
+                        return completion(.failure(ParticleError.webhookListFailed(ParticleError.httpResponseParseFailed(message))))
                     }
                 }
                 task.resume()

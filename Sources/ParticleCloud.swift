@@ -1,6 +1,6 @@
 // This source file is part of the vakoc.com open source project(s)
 //
-// Copyright © 2016 Mark Vakoc. All rights reserved.
+// Copyright © 2016, 2017 Mark Vakoc. All rights reserved.
 // Licensed under Apache License v2.0
 //
 // See http://www.vakoc.com/LICENSE.txt for license information
@@ -85,7 +85,7 @@ public class ParticleCloud: WebServiceCallable {
             if let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [[String : Any]],  let j = json {
                 return completion(.success(j.flatMap() { return OAuthTokenListEntry(dictionary: $0)} ))
             } else {
-                return completion(.failure(ParticleError.listAccessTokensFailed(ParticleError.httpReponseParseFailed(nil))))
+                return completion(.failure(ParticleError.listAccessTokensFailed(ParticleError.httpResponseParseFailed(nil))))
             }
         })
         task.resume()

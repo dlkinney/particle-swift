@@ -27,12 +27,13 @@ public enum ParticleError: Error {
     createWebhookFailed(Error),
     failedToParseJsonFile,
     deleteWebhookFailed(String,Error),
-    httpReponseParseFailed(String?),
+    httpResponseParseFailed(String?),
     variableValueFailed(Error),
     compileRequestFailed(String),
     librariesRequestFailed(String),
     librariesUrlMalformed(String),
-    libraryVersionsRequestFailed(String)
+    libraryVersionsRequestFailed(String),
+    productsListFailed(Error)
 }
 
 // Linux doesn't support variadic lists including strings, reference https://bugs.swift.org/browse/SR-957
@@ -79,7 +80,7 @@ extension ParticleError: CustomStringConvertible {
             return "Unable to parse the specified JSON file"
         case .deleteWebhookFailed(let webhookID, let error):
             return "Unable to delete the webhook \(webhookID) with error \(error)"
-        case .httpReponseParseFailed(let message):
+        case .httpResponseParseFailed(let message):
             return "Failed to parse the HTTP response '\(message ?? "")'"
         case .variableValueFailed(let error):
             return "Failed to obtain variable value with error \(error)"
@@ -91,6 +92,8 @@ extension ParticleError: CustomStringConvertible {
             return "Unable to construct a valid url for the libraries api using \(string)"
         case .libraryVersionsRequestFailed(let string):
             return "Unable to obtain library versions with error \(string)"
+        case .productsListFailed(let error):
+            return "Unable to list the products with error \(error)"
         }
     }
 }
@@ -137,7 +140,7 @@ extension ParticleError: CustomStringConvertible {
             return String.localizedStringWithFormat("Unable to parse the specified JSON file")
         case .deleteWebhookFailed(let webhookID, let error):
             return String.localizedStringWithFormat("Unable to delete the webhook %1@ with error %2@", "\(webhookID)", "\(error)")
-        case .httpReponseParseFailed(let message):
+        case .httpResponseParseFailed(let message):
             return String.localizedStringWithFormat("Failed to parse the HTTP response '%1@'", message ?? "")
         case .variableValueFailed(let error):
             return String.localizedStringWithFormat("Failed to obtain variable value with error %1@", "\(error)")
@@ -149,6 +152,8 @@ extension ParticleError: CustomStringConvertible {
             return String.localizedStringWithFormat("Unable to construct a valid url for the libraries api using %1@", string)
         case .libraryVersionsRequestFailed(let string):
             return String.localizedStringWithFormat("Unable to obtain library versions with error %1@", String(describing: string))
+        case .productsListFailed(let error):
+            return String.localizedStringWithFormat("Unable to list the products with error %1@", String(describing: error))            
         }
     }
 }

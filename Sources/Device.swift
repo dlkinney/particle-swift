@@ -1,6 +1,6 @@
 // This source file is part of the vakoc.com open source project(s)
 //
-// Copyright © 2016 Mark Vakoc. All rights reserved.
+// Copyright © 2016, 2017 Mark Vakoc. All rights reserved.
 // Licensed under Apache License v2.0
 //
 // See http://www.vakoc.com/LICENSE.txt for license information
@@ -16,10 +16,14 @@ public struct DeviceInformation {
         case core = 0,
         /// Particle Photon
         photon = 6,
+        /// P1
+        p1 = 8,
         /// Particle Electron
         electron = 10,
         /// Raspberry Pi
-        pi = 31
+        pi = 31,
+        /// Bluz
+        bluz = 103
         
         
         public var description: String {
@@ -28,10 +32,14 @@ public struct DeviceInformation {
                 return "Core"
             case .photon:
                 return "Photon"
+            case .p1:
+                return "Photon (P1)"
             case .electron:
                 return "Electron"
             case .pi:
                 return "Raspberry Pi"
+            case .bluz:
+                return "Bluz"
             }
         }
     }
@@ -371,7 +379,7 @@ extension ParticleCloud {
                         
                         warn("failed to obtain devices with response: \(String(describing: response)) and message body \(String(describing: message))")
                         
-                        return completion(.failure(ParticleError.deviceListFailed(ParticleError.httpReponseParseFailed(message))))
+                        return completion(.failure(ParticleError.deviceListFailed(ParticleError.httpResponseParseFailed(message))))
                     }
                 }
                 task.resume()
@@ -414,7 +422,7 @@ extension ParticleCloud {
                     if let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String : Any],  let j = json, let deviceDetailInformation = DeviceDetailInformation(with: j) {
                         return completion(.success(deviceDetailInformation))
                     } else {
-                        return completion(.failure(ParticleError.deviceDetailedInformationFailed(ParticleError.httpReponseParseFailed(nil))))
+                        return completion(.failure(ParticleError.deviceDetailedInformationFailed(ParticleError.httpResponseParseFailed(nil))))
                     }
                 }
                 task.resume()
@@ -458,7 +466,7 @@ extension ParticleCloud {
                     if let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String : Any],  let j = json {
                         return completion(.success(j))
                     } else {
-                        return completion(.failure(ParticleError.callFunctionFailed(ParticleError.httpReponseParseFailed(nil))))
+                        return completion(.failure(ParticleError.callFunctionFailed(ParticleError.httpResponseParseFailed(nil))))
                     }
                 }
                 task.resume()
@@ -494,7 +502,7 @@ extension ParticleCloud {
                     if let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String : Any],  let j = json {
                         return completion(.success(j))
                     } else {
-                        return completion(.failure(ParticleError.variableValueFailed(ParticleError.httpReponseParseFailed(nil))))
+                        return completion(.failure(ParticleError.variableValueFailed(ParticleError.httpResponseParseFailed(nil))))
                     }
                 }
                 task.resume()
@@ -564,7 +572,7 @@ extension ParticleCloud {
                     if let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String : Any],  let j = json {
                         return completion(.success(j))
                     } else {
-                        return completion(.failure(ParticleError.unclaimDeviceFailed(ParticleError.httpReponseParseFailed(nil))))
+                        return completion(.failure(ParticleError.unclaimDeviceFailed(ParticleError.httpResponseParseFailed(nil))))
                     }
                 }
                 task.resume()
@@ -602,7 +610,7 @@ extension ParticleCloud {
                     if let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String : Any],  let j = json, let transferid = j["transfer_id"] as? String {
                         return completion(.success(transferid))
                     } else {
-                        return completion(.failure(ParticleError.transferDeviceFailed(ParticleError.httpReponseParseFailed(nil))))
+                        return completion(.failure(ParticleError.transferDeviceFailed(ParticleError.httpResponseParseFailed(nil))))
                     }
                 }
                 task.resume()
@@ -652,7 +660,7 @@ extension ParticleCloud {
                     if let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String : Any],  let j = json, let claimCode = ClaimResult(with: j) {
                         return completion(.success(claimCode))
                     } else {
-                        return completion(.failure(ParticleError.createClaimCode(ParticleError.httpReponseParseFailed(nil))))
+                        return completion(.failure(ParticleError.createClaimCode(ParticleError.httpResponseParseFailed(nil))))
                     }
                 }
                 task.resume()
