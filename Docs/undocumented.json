@@ -44,35 +44,35 @@
     },
     {
       "file": "/Users/mvakoc/Documents/particle-swift/Sources/Device.swift",
-      "line": 106,
+      "line": 118,
       "symbol": "DeviceInformation.init(with:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/mvakoc/Documents/particle-swift/Sources/Device.swift",
-      "line": 147,
+      "line": 159,
       "symbol": "==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.free",
       "warning": "undocumented"
     },
     {
       "file": "/Users/mvakoc/Documents/particle-swift/Sources/Device.swift",
-      "line": 234,
+      "line": 246,
       "symbol": "DeviceDetailInformation.init(with:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/mvakoc/Documents/particle-swift/Sources/Device.swift",
-      "line": 309,
+      "line": 321,
       "symbol": "==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.free",
       "warning": "undocumented"
     },
     {
       "file": "/Users/mvakoc/Documents/particle-swift/Sources/Device.swift",
-      "line": 315,
+      "line": 327,
       "symbol": "ClaimResult.init(with:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -206,7 +206,7 @@
     {
       "file": "/Users/mvakoc/Documents/particle-swift/Sources/Errors.swift",
       "line": 30,
-      "symbol": "ParticleError.httpReponseParseFailed",
+      "symbol": "ParticleError.httpResponseParseFailed",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
@@ -242,6 +242,13 @@
       "file": "/Users/mvakoc/Documents/particle-swift/Sources/Errors.swift",
       "line": 35,
       "symbol": "ParticleError.libraryVersionsRequestFailed",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/mvakoc/Documents/particle-swift/Sources/Errors.swift",
+      "line": 36,
+      "symbol": "ParticleError.productsListFailed",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
@@ -317,14 +324,28 @@
     },
     {
       "file": "/Users/mvakoc/Documents/particle-swift/Sources/Firmware.swift",
-      "line": 57,
+      "line": 115,
+      "symbol": "BuildIssue.IssueType.warning",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/mvakoc/Documents/particle-swift/Sources/Firmware.swift",
+      "line": 116,
+      "symbol": "BuildIssue.IssueType.error",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/mvakoc/Documents/particle-swift/Sources/Firmware.swift",
+      "line": 155,
       "symbol": "BuildResult.compileSuccess",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/mvakoc/Documents/particle-swift/Sources/Firmware.swift",
-      "line": 58,
+      "line": 156,
       "symbol": "BuildResult.compileFailure",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
@@ -516,6 +537,34 @@
       "line": 10,
       "symbol": "ParticleSwiftInfo.version",
       "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/mvakoc/Documents/particle-swift/Sources/Products.swift",
+      "line": 35,
+      "symbol": "Product.ProductType.hobbyist",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/mvakoc/Documents/particle-swift/Sources/Products.swift",
+      "line": 36,
+      "symbol": "Product.ProductType.consumer",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/mvakoc/Documents/particle-swift/Sources/Products.swift",
+      "line": 37,
+      "symbol": "Product.ProductType.industrial",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/mvakoc/Documents/particle-swift/Sources/Products.swift",
+      "line": 158,
+      "symbol": "ParticleCloud.products(_:completion:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {

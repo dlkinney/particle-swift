@@ -170,6 +170,7 @@ APIs should be relatively stable but are subject to change.  Additional Particle
 in the following general order
 
   * Firmware (In Progress)
+  * Products (In Progress)
 
 Once complete additional functionality will be added.
 
