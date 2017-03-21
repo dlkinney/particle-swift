@@ -34,7 +34,8 @@ public enum ParticleError: Error {
     librariesUrlMalformed(String),
     libraryVersionsRequestFailed(String),
     productsListFailed(Error),
-    productTeamMembersFailed(Error)
+    productTeamMembersFailed(Error),
+    inviteTeamMember(Error)
 }
 
 // Linux doesn't support variadic lists including strings, reference https://bugs.swift.org/browse/SR-957
@@ -97,6 +98,8 @@ extension ParticleError: CustomStringConvertible {
             return "Failed to list the products with error \(error)"
         case .productTeamMembersFailed(let error):
             return "Failed to obtain the product team members with error \(error)"
+        case .inviteTeamMember(let error):
+            return "Failed to invite team member with error \(error)"
         }
     }
 }
@@ -159,6 +162,8 @@ extension ParticleError: CustomStringConvertible {
             return String.localizedStringWithFormat("Unable to list the products with error %1@", String(describing: error))
         case .productTeamMembersFailed(let error):
             return String.localizedStringWithFormat("Failed to obtain the product team members with error %1@", String(describing: error))
+        case .inviteTeamMember(let error):
+            return String.localizedStringWithFormat("Failed to invite team member with error %1@", String(describing: error))
         }
     }
 }
