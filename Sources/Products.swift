@@ -75,7 +75,6 @@ public struct Product {
     
     /// The data limit imposed on the product
     public var mbLimit: Any?
-    
 }
 
 extension Product: StringKeyedDictionaryConvertible {
@@ -150,11 +149,75 @@ extension Product: StringKeyedDictionaryConvertible {
     }
 }
 
+/// Representation of a product team member
+public struct ProductTeamMember {
+    
+    /// The constants used to construct/parse from json
+    fileprivate enum DictionaryConstants: String {
+        case id = "_id"
+        case username
+    }
+    
+    /// The unique identifier of the team memeber
+    public var id: String
+    
+    /// Username of the team member
+    public var username: String
+}
+
+extension ProductTeamMember: StringKeyedDictionaryConvertible {
+    
+    ///  Create a Product with a dictionary
+    ///
+    /// The dictionary looks like the following
+    ///
+    ///        [
+    ///          {
+    ///             "_id":"9980222caf8bad191600019b",
+    ///             "username":"jeff@particle.io"
+    ///          },
+    ///          ...
+    ///        ]
+    public init?(with dictionary: [String : Any]) {
+        
+        guard let id = dictionary[DictionaryConstants.id.rawValue] as? String,
+            let username = dictionary[DictionaryConstants.username.rawValue] as? String , !username.isEmpty else { return nil }
+
+        self.id = id
+        self.username = username
+    }
+    
+    /// The dproduct as a dictionary using keys compatible with the original web service
+    public var dictionary: [String : Any] {
+        get {
+            var ret = [String : Any]()
+            ret[DictionaryConstants.id.rawValue] = id
+            ret[DictionaryConstants.username.rawValue] = username
+            return ret
+        }
+    }
+}
+
+
+extension ProductTeamMember: Equatable {
+    
+    public static func ==(lhs: ProductTeamMember, rhs: ProductTeamMember) -> Bool {
+        return lhs.id == rhs.id && lhs.username == rhs.username
+    }
+}
+
 
 
 // MARK: Products
 extension ParticleCloud {
     
+    /// List the available products or an individual product
+    ///
+    /// Reference API https://docs.particle.io/reference/api/#list-products
+    ///
+    /// - Parameters:
+    ///   - productIdOrSlug: The product id (or slug) to retrieve.  If nil, all products will be retrieved
+    ///   - completion: The asynchronous result containing an array of products or an error code
     public func products(_ productIdOrSlug: String? = nil, completion: @escaping (Result<[Product]>) -> Void ) {
         
         self.authenticate(false) { result in
@@ -190,7 +253,7 @@ extension ParticleCloud {
                     } else {
                         
                         let message = data != nil ? String(data: data!, encoding: String.Encoding.utf8) ?? "" : ""
-                        warn("failed to obtain product with response: \(String(describing: response)) and message body \(String(describing: message))")
+                        warn("Failed to obtain product with response: \(String(describing: response)) and message body \(String(describing: message))")
                         return completion(.failure(ParticleError.productsListFailed(ParticleError.httpResponseParseFailed(message))))
                     }
                 }
@@ -198,7 +261,51 @@ extension ParticleCloud {
             }
         }
     }
+    
+    /// List all team members that are part of a given product
+    ///
+    /// Reference API https://docs.particle.io/reference/api/#list-team-members
+    ///
+    /// - Parameters:
+    ///   - productIdOrSlug: The product id (or slug) to retrieve
+    ///   - completion: The asynchronous result containing an array of products or an error code
+    public func productTeamMembers(_ productIdOrSlug: String, completion: @escaping (Result<[ProductTeamMember]>) -> Void ) {
+        
+        self.authenticate(false) { result in
+            switch result {
+                
+            case .failure(let error):
+                return completion(.failure(error))
+                
+            case .success(let accessToken):
+                
+                let url = self.baseURL.appendingPathComponent("v1/products/\(productIdOrSlug)/team")
+                var request = URLRequest(url: url)
+                request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+                
+                let task = self.urlSession.dataTask(with: request) { (data, response, error) in
+                    
+                    trace("Retrieving product team members", request: request, data: data, response: response, error: error)
+                    
+                    if let error = error {
+                        return completion(.failure(ParticleError.productTeamMembersFailed(error)))
+                    }
+                    
+                    if let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [[String : Any]],  let j = json {
+                        return completion(.success(j.flatMap({ return ProductTeamMember(with: $0)})))
+                    } else {
+                        
+                        let message = data != nil ? String(data: data!, encoding: String.Encoding.utf8) ?? "" : ""
+                        warn("Failed to obtain product team members with response: \(String(describing: response)) and message body \(String(describing: message))")
+                        return completion(.failure(ParticleError.productTeamMembersFailed(ParticleError.httpResponseParseFailed(message))))
+                    }
+                }
+                task.resume()
+            }
+        }
+    }
 }
+
 
 
 

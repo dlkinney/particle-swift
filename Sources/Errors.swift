@@ -33,7 +33,8 @@ public enum ParticleError: Error {
     librariesRequestFailed(String),
     librariesUrlMalformed(String),
     libraryVersionsRequestFailed(String),
-    productsListFailed(Error)
+    productsListFailed(Error),
+    productTeamMembersFailed(Error)
 }
 
 // Linux doesn't support variadic lists including strings, reference https://bugs.swift.org/browse/SR-957
@@ -89,11 +90,13 @@ extension ParticleError: CustomStringConvertible {
         case .librariesRequestFailed(let error):
             return "Failed to obtain the available libraries with error \(error)"
         case .librariesUrlMalformed(let string):
-            return "Unable to construct a valid url for the libraries api using \(string)"
+            return "Failed to construct a valid url for the libraries api using \(string)"
         case .libraryVersionsRequestFailed(let string):
-            return "Unable to obtain library versions with error \(string)"
+            return "Failed to obtain library versions with error \(string)"
         case .productsListFailed(let error):
-            return "Unable to list the products with error \(error)"
+            return "Failed to list the products with error \(error)"
+        case .productTeamMembersFailed(let error):
+            return "Failed to obtain the product team members with error \(error)"
         }
     }
 }
@@ -153,7 +156,9 @@ extension ParticleError: CustomStringConvertible {
         case .libraryVersionsRequestFailed(let string):
             return String.localizedStringWithFormat("Unable to obtain library versions with error %1@", String(describing: string))
         case .productsListFailed(let error):
-            return String.localizedStringWithFormat("Unable to list the products with error %1@", String(describing: error))            
+            return String.localizedStringWithFormat("Unable to list the products with error %1@", String(describing: error))
+        case .productTeamMembersFailed(let error):
+            return String.localizedStringWithFormat("Failed to obtain the product team members with error %1@", String(describing: error))
         }
     }
 }
