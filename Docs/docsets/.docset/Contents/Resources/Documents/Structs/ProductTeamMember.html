@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>OAuthTokenListEntry Struct Reference</title>
+    <title>ProductTeamMember Struct Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Struct/OAuthTokenListEntry" class="dashAnchor"></a>
-    <a title="OAuthTokenListEntry Struct Reference"></a>
+    <a name="//apple_ref/swift/Struct/ProductTeamMember" class="dashAnchor"></a>
+    <a title="ProductTeamMember Struct Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html"> Docs</a> (76% documented)</p>
@@ -22,7 +22,7 @@
       <p id="breadcrumbs">
         <a href="../index.html"> Reference</a>
         <img id="carat" src="../img/carat.png" />
-        OAuthTokenListEntry Struct Reference
+        ProductTeamMember Struct Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -212,14 +212,14 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>OAuthTokenListEntry</h1>
+            <h1>ProductTeamMember</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">OAuthTokenListEntry</span><span class="p">:</span> <span class="kt">CustomStringConvertible</span></code></pre>
+                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">ProductTeamMember</span></code></pre>
 
                 </div>
               </div>
-            <p>Represents an OAuthToken as returned by the access_tokens</p>
+            <p>A product team member</p>
 
           </section>
           <section class="section task-group-section">
@@ -228,9 +228,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vV13ParticleSwift19OAuthTokenListEntry11accessTokenSS"></a>
-                    <a name="//apple_ref/swift/Property/accessToken" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vV13ParticleSwift19OAuthTokenListEntry11accessTokenSS">accessToken</a>
+                    <a name="/s:vV13ParticleSwift17ProductTeamMember2idSS"></a>
+                    <a name="//apple_ref/swift/Property/id" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vV13ParticleSwift17ProductTeamMember2idSS">id</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -238,14 +238,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>the magical token you will use for all other requests</p>
+                        <p>The unique identifier of the team memeber</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">accessToken</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">id</span><span class="p">:</span> <span class="kt">String</span></code></pre>
 
                         </div>
                       </div>
@@ -255,9 +255,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vV13ParticleSwift19OAuthTokenListEntry7expiresV10Foundation4Date"></a>
-                    <a name="//apple_ref/swift/Property/expires" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vV13ParticleSwift19OAuthTokenListEntry7expiresV10Foundation4Date">expires</a>
+                    <a name="/s:vV13ParticleSwift17ProductTeamMember8usernameSS"></a>
+                    <a name="//apple_ref/swift/Property/username" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vV13ParticleSwift17ProductTeamMember8usernameSS">username</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -265,14 +265,56 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The date the token expires</p>
+                        <p>Username of the team member</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">expires</span><span class="p">:</span> <span class="kt">Date</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">username</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:FV13ParticleSwift17ProductTeamMembercFT4withGVs10DictionarySSP___GSqS0__"></a>
+                    <a name="//apple_ref/swift/Method/init(with:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FV13ParticleSwift17ProductTeamMembercFT4withGVs10DictionarySSP___GSqS0__">init(with:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Create a Product with a dictionary</p>
+
+<p>The dictionary looks like the following</p>
+
+<pre class="highlight plaintext"><code>   [
+     {
+        "_id":"9980222caf8bad191600019b",
+        "username":"jeff@particle.io"
+     },
+     ...
+   ]
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">?(</span><span class="n">with</span> <span class="nv">dictionary</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt">Any</span><span class="p">])</span></code></pre>
 
                         </div>
                       </div>
@@ -282,9 +324,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vV13ParticleSwift19OAuthTokenListEntry6clientSS"></a>
-                    <a name="//apple_ref/swift/Property/client" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vV13ParticleSwift19OAuthTokenListEntry6clientSS">client</a>
+                    <a name="/s:vV13ParticleSwift17ProductTeamMember10dictionaryGVs10DictionarySSP__"></a>
+                    <a name="//apple_ref/swift/Property/dictionary" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vV13ParticleSwift17ProductTeamMember10dictionaryGVs10DictionarySSP__">dictionary</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -292,68 +334,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>the client string</p>
+                        <p>The dproduct as a dictionary using keys compatible with the original web service</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">client</span><span class="p">:</span> <span class="kt">String</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FV13ParticleSwift19OAuthTokenListEntrycFT10dictionaryGVs10DictionarySSP___GSqS0__"></a>
-                    <a name="//apple_ref/swift/Method/init(dictionary:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FV13ParticleSwift19OAuthTokenListEntrycFT10dictionaryGVs10DictionarySSP___GSqS0__">init(dictionary:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">OAuthTokenListEntry</span><span class="p">:</span> <span class="kt">CustomStringConvertible</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:vPs23CustomStringConvertible11descriptionSS"></a>
-                    <a name="//apple_ref/swift/Property/description" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vPs23CustomStringConvertible11descriptionSS">description</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>the client string</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">description</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">dictionary</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt">Any</span><span class="p">]</span></code></pre>
 
                         </div>
                       </div>
@@ -377,14 +365,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>the client string</p>
+                        <p>The dproduct as a dictionary using keys compatible with the original web service</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">==</span><span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">OAuthTokenListEntry</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">OAuthTokenListEntry</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">==</span><span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">ProductTeamMember</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">ProductTeamMember</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
 
                         </div>
                       </div>
