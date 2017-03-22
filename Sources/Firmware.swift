@@ -225,7 +225,7 @@ extension ParticleCloud {
                     trace( "Compiled \(files.count) files", request: request, data: data, response: response, error: error)
                     
                     if let error = error {
-                        return completion(.failure(ParticleError.createWebhookFailed(error)))
+                        return completion(.failure(ParticleError.compileRequestFailed("\(error)")))
                     }
                     
                     if let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String : Any], let j = json {
@@ -317,6 +317,47 @@ extension ParticleCloud {
                         return completion(.failure(ParticleError.compileRequestFailed(message)))
                     }
                 }
+                task.resume()
+            }
+        }
+    }
+    
+    /// Download the binary created during compilation
+    ///
+    /// When a download successfully completes, the URL will point to a file that must be read or
+    /// copied during the invocation of the completion routine.  The file will be removed automatically.
+    public func download(binary: BinaryInfo, completion: @escaping (Result<URL>) -> Void ) {
+        
+        self.authenticate(false) { result in
+            switch result {
+                
+            case .failure(let error):
+                return completion(.failure(error))
+                
+            case .success(let accessToken):
+                var request = URLRequest(url: self.baseURL.appendingPathComponent("v1/binaries/\(binary.binaryId)"))
+                request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+                request.httpMethod = "GET"
+                
+                trace("Downloading binary \(binary)")
+                
+                let task = self.urlSession.downloadTask(with: request, completionHandler: { (url, response, error) in
+                    
+                    trace( "Downloaded binary \(binary)", request: request, url: url, response: response, error: error)
+                    
+                    if let error = error {
+                        return completion(.failure(ParticleError.downloadBinaryFailed(error)))
+                    }
+                    
+                    if let url = url, let response = response as? HTTPURLResponse, response.statusCode == 200 {
+                        return completion(.success(url))
+                    }
+
+                    warn("failed to download binary with response: \(String(describing: response))")
+                    return completion(.failure(ParticleError.downloadError))
+                })
+                    
+                    
                 task.resume()
             }
         }

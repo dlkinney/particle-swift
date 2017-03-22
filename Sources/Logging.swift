@@ -1,6 +1,6 @@
 // This source file is part of the vakoc.com open source project(s)
 //
-// Copyright © 2016 Mark Vakoc. All rights reserved.
+// Copyright © 2016, 2017 Mark Vakoc. All rights reserved.
 // Licensed under Apache License v2.0
 //
 // See http://www.vakoc.com/LICENSE.txt for license information
@@ -233,6 +233,44 @@ func trace(_ description: String, request: URLRequest, data: Data?, response: UR
         components.append(body)
     }
 #endif
+    
+    if let error = error {
+        components.append("error:")
+        components.append("\(error)")
+    }
+    
+    trace(components.joined(separator: "\n"), function: function, file: file, line: line)
+}
+
+/**
+ logs a http request download request
+ */
+@inline(__always)
+func trace(_ description: String, request: URLRequest, url: URL?, response: URLResponse?, error: Error?, function: String = #function, file: String = #file, line: Int = #line) -> Void  {
+    guard globalLogLevel.rawValue <= LogLevel.trace.rawValue else {
+        return
+    }
+    
+    var components = [description, "with \(request.httpMethod ?? "GET") request"]
+    components.append("\(request)")
+    if let headers = request.allHTTPHeaderFields {
+        components.append("headers")
+        components.append("\(headers)")
+    }
+    
+    if let body = request.httpBody, let bodyString = String(data: body, encoding: String.Encoding.utf8) {
+        components.append("request body")
+        components.append(bodyString)
+    }
+    
+    if let response = response {
+        components.append("returned")
+        components.append("\(response)")
+    }
+    
+    if let url = url {
+        components.append("with url \(url)")
+    }
     
     if let error = error {
         components.append("error:")
