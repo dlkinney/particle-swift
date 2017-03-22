@@ -196,7 +196,7 @@ extension ParticleCloud {
                 // Insert the product id
                 body += "--\(boundary)\r\n"
                 body += "Content-Disposition: form-data; name=\"product_id\"\r\n\r\n"
-                body += "\(product)\r\n"
+                body += "\(product.rawValue)\r\n"
                 
                 if let build_target_version = build_target_version {
                     body += "--\(boundary)\r\n"
@@ -214,11 +214,12 @@ extension ParticleCloud {
                     body += fileContent
                     body += "\r\n"
                 }
-                body += "--\(boundary)--\r\n"
+                body += "--\(boundary)--"
                 
                 trace("compile message body:\n\n\(body)\n\n")
-                
-                request.httpBody = body.data(using: .utf8)
+                let data = body.data(using: .utf8)
+                request.setValue("\(data?.count ?? 0)", forHTTPHeaderField: "Content-Length")
+                request.httpBody = data
                 
                 let task = self.urlSession.dataTask(with: request) { (data, response, error) in
                     
@@ -326,6 +327,10 @@ extension ParticleCloud {
     ///
     /// When a download successfully completes, the URL will point to a file that must be read or
     /// copied during the invocation of the completion routine.  The file will be removed automatically.
+    ///
+    /// - Parameters:
+    ///   - binary: the binary information to download
+    ///   - completion: asynchronous callback containing the file url of the download, if successful
     public func download(binary: BinaryInfo, completion: @escaping (Result<URL>) -> Void ) {
         
         self.authenticate(false) { result in
@@ -358,6 +363,75 @@ extension ParticleCloud {
                 })
                     
                     
+                task.resume()
+            }
+        }
+    }
+    
+    /// Flash a device with the specified firmware
+    ///
+    /// Note:  this method only initiates the flash of the firmware to the device.  The actual application
+    /// of the firmware is done asynchronously through Particle and the true result isn't known.  
+    ///
+    /// Hint:  you can watch for spark/flash/status events to see the true firmware deployment status
+    ///
+    /// - Parameters:
+    ///   - deviceId: The device id to flash
+    ///   - data: The firmware to upload
+    ///   - completion: A result on the invoking the service, like "Update started"
+    public func flash(deviceId: String, data: Data, completion: @escaping (Result<String>) -> Void ) {
+        
+        self.authenticate(false) { result in
+            switch result {
+                
+            case .failure(let error):
+                return completion(.failure(error))
+                
+            case .success(let accessToken):
+                var request = URLRequest(url: self.baseURL.appendingPathComponent("v1/devices/\(deviceId)"))
+                request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+                request.httpMethod = "PUT"
+                
+                trace("Flashing device \(deviceId)")
+                
+                let boundary = UUID().uuidString
+                
+                request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+                
+                var body = String()
+                
+                // Insert the product id
+                body += "--\(boundary)\r\n"
+                body += "Content-Disposition: form-data; name=\"file_type\"\r\n\r\n"
+                body += "binary\r\n"
+                body += "--\(boundary)\r\n"
+                body += "Content-Disposition: form-data; name=\"file\"; filename=\"firmware.bin\"\r\nContent-Transfer-Encoding: binary\r\n\r\n"
+                
+                var bodyData = body.data(using: .utf8)
+                bodyData?.append(data)
+                bodyData?.append("\r\n--\(boundary)--".data(using: .utf8)!)
+                request.setValue("\(bodyData?.count ?? 0)", forHTTPHeaderField: "Content-Length")
+                request.httpBody = bodyData
+                
+                
+              let task = self.urlSession.dataTask(with: request) { (data, response, error) in
+                
+                    trace( "Flashed device \(deviceId)", request: request, data: data, response: response, error: error)
+                    
+                    if let error = error {
+                        return completion(.failure(ParticleError.flashDeviceFailed(error)))
+                    }
+                    
+                    if let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String : Any], let j = json, let status = j["status"] as? String {
+                        return completion(.success(status))
+                    }
+                    let message = data != nil ? String(data: data!, encoding: String.Encoding.utf8) ?? "" : ""
+
+                    warn("failed to download binary with response: \(String(describing: response))")
+                    return completion(.failure(ParticleError.flashDeviceFailed(ParticleError.httpResponseParseFailed(message))))
+                }
+                
+                
                 task.resume()
             }
         }
