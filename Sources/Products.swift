@@ -499,7 +499,7 @@ extension ParticleCloud {
                     trace("Inviting team member", request: request, data: data, response: response, error: error)
                     
                     if let error = error {
-                        return completion(.failure(ParticleError.inviteTeamMember(error)))
+                        return completion(.failure(ParticleError.inviteTeamMemberFailed(error)))
                     }
                     
                     if let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String : Any],  let j = json, let invite = ProductTeamInvitation(with: j) {
@@ -507,7 +507,54 @@ extension ParticleCloud {
                     } else {                        
                         let message = data != nil ? String(data: data!, encoding: String.Encoding.utf8) ?? "" : ""
                         warn("Failed to invite team member with response: \(String(describing: response)) and message body \(String(describing: message))")
-                        return completion(.failure(ParticleError.inviteTeamMember(ParticleError.httpResponseParseFailed(message))))
+                        return completion(.failure(ParticleError.inviteTeamMemberFailed(ParticleError.httpResponseParseFailed(message))))
+                    }
+                }
+                task.resume()
+            }
+        }
+    }
+    
+    /// Remove a current team member.
+    ///
+    /// Reference API https://docs.particle.io/reference/api/#remove-team-member
+    ///
+    /// - Parameters:
+    ///   - productIdOrSlug: The product id (or slug) on which the team member is removed
+    ///   - username: Username of the team member to be removed
+    ///   - completion: The asynchronous result detailing the result of the member removal
+    public func removeTeamMember(_ productIdOrSlug: String, username: String, completion: @escaping (Result<Bool>) -> Void ) {
+        
+        self.authenticate(false) { result in
+            switch result {
+                
+            case .failure(let error):
+                return completion(.failure(error))
+                
+            case .success(let accessToken):
+                guard let encodedUsername = username.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) else {
+                    return completion(.failure(ParticleError.invalidUsername))
+                }
+                
+                let url = self.baseURL.appendingPathComponent("v1/products/\(productIdOrSlug)/team/\(encodedUsername)")
+                var request = URLRequest(url: url)
+                request.httpMethod = "DELETE"
+                request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+                
+                let task = self.urlSession.dataTask(with: request) { (data, response, error) in
+                    
+                    trace("Remove team member", request: request, data: data, response: response, error: error)
+                    
+                    if let error = error {
+                        return completion(.failure(ParticleError.removeTeamMemberFailed(error)))
+                    }
+                    
+                    if let response = response as? HTTPURLResponse, response.statusCode == 204 {
+                        return completion(.success(true))
+                    } else {
+                        let message = data != nil ? String(data: data!, encoding: String.Encoding.utf8) ?? "" : ""
+                        warn("Failed to remove team member with response: \(String(describing: response)) and message body \(String(describing: message))")
+                        return completion(.failure(ParticleError.removeTeamMemberFailed(ParticleError.httpResponseParseFailed(message))))
                     }
                 }
                 task.resume()

@@ -35,7 +35,9 @@ public enum ParticleError: Error {
     libraryVersionsRequestFailed(String),
     productsListFailed(Error),
     productTeamMembersFailed(Error),
-    inviteTeamMember(Error)
+    inviteTeamMemberFailed(Error),
+    removeTeamMemberFailed(Error),
+    invalidUsername
 }
 
 // Linux doesn't support variadic lists including strings, reference https://bugs.swift.org/browse/SR-957
@@ -63,25 +65,25 @@ extension ParticleError: CustomStringConvertible {
         case .oauthTokenParseFailed:
             return "The HTTP response could not be parsed as a valid token"
         case .invalidURLRequest(let error):
-            return "Unable to create a valid URL request with error \(error)"
+            return "Failed to create a valid URL request with error \(error)"
         case .claimDeviceFailed(let error):
-            return "Unable to claim device with error \(error)"
+            return "Failed to claim device with error \(error)"
         case .transferDeviceFailed(let error):
-            return "Unable to transfer device with error \(error)"
+            return "Failed to transfer device with error \(error)"
         case .createClaimCode(let error):
-            return "Unable to create a claim code with error \(error)"
+            return "Failed to create a claim code with error \(error)"
         case .unclaimDeviceFailed(let error):
-            return "Unable to unclaim a device with error \(error)"
+            return "Failed to unclaim a device with error \(error)"
         case .webhookListFailed(let error):
-            return "Unable to list the available webhooks with error \(error)"
+            return "Failed to list the available webhooks with error \(error)"
         case .webhookGetFailed(let webhookID, let error):
-            return "Unable to get the webhook \(webhookID) with error \(error)"
+            return "Failed to get the webhook \(webhookID) with error \(error)"
         case .createWebhookFailed(let error):
-            return "Unable to create the webhook with error \(error)"
+            return "Failed to create the webhook with error \(error)"
         case .failedToParseJsonFile:
-            return "Unable to parse the specified JSON file"
+            return "Failed to parse the specified JSON file"
         case .deleteWebhookFailed(let webhookID, let error):
-            return "Unable to delete the webhook \(webhookID) with error \(error)"
+            return "Failed to delete the webhook \(webhookID) with error \(error)"
         case .httpResponseParseFailed(let message):
             return "Failed to parse the HTTP response '\(message ?? "")'"
         case .variableValueFailed(let error):
@@ -98,8 +100,12 @@ extension ParticleError: CustomStringConvertible {
             return "Failed to list the products with error \(error)"
         case .productTeamMembersFailed(let error):
             return "Failed to obtain the product team members with error \(error)"
-        case .inviteTeamMember(let error):
+        case .inviteTeamMembeFailed(let error):
             return "Failed to invite team member with error \(error)"
+        case .removeTeamMemberFailed(let error):
+            return "Failed to remove team member with error \(error)"
+        case .invalidUsername:
+            return "Invalid Username"
         }
     }
 }
@@ -127,25 +133,25 @@ extension ParticleError: CustomStringConvertible {
         case .oauthTokenParseFailed:
             return String.localizedStringWithFormat("The HTTP response could not be parsed as a valid token")
         case .invalidURLRequest(let error):
-            return String.localizedStringWithFormat("Unable to create a valid URL request with error %1@", "\(error)")
+            return String.localizedStringWithFormat("Failed to create a valid URL request with error %1@", "\(error)")
         case .claimDeviceFailed(let error):
-            return String.localizedStringWithFormat("Unable to claim device with error %1@", "\(error)")
+            return String.localizedStringWithFormat("Failed to claim device with error %1@", "\(error)")
         case .transferDeviceFailed(let error):
-            return String.localizedStringWithFormat("Unable to transfer device with error %1@", "\(error)")
+            return String.localizedStringWithFormat("Failed to transfer device with error %1@", "\(error)")
         case .createClaimCode(let error):
-            return String.localizedStringWithFormat("Unable to create a claim code with error %1@", "\(error)")
+            return String.localizedStringWithFormat("Failed to create a claim code with error %1@", "\(error)")
         case .unclaimDeviceFailed(let error):
-            return String.localizedStringWithFormat("Unable to unclaim a device with error %1@", "\(error)")
+            return String.localizedStringWithFormat("Failed to unclaim a device with error %1@", "\(error)")
         case .webhookListFailed(let error):
-            return String.localizedStringWithFormat("Unable to list the available webhooks with error %1@", "\(error)")
+            return String.localizedStringWithFormat("Failed to list the available webhooks with error %1@", "\(error)")
         case .webhookGetFailed(let webhookID, let error):
-            return String.localizedStringWithFormat("Unable to get the webhook %1@ with error %2@", "\(webhookID)", "\(error)")
+            return String.localizedStringWithFormat("Failed to get the webhook %1@ with error %2@", "\(webhookID)", "\(error)")
         case .createWebhookFailed(let error):
-            return String.localizedStringWithFormat("Unable to create the webhook with error %1@", "\(error)")
+            return String.localizedStringWithFormat("Failed to create the webhook with error %1@", "\(error)")
         case .failedToParseJsonFile:
-            return String.localizedStringWithFormat("Unable to parse the specified JSON file")
+            return String.localizedStringWithFormat("Failed to parse the specified JSON file")
         case .deleteWebhookFailed(let webhookID, let error):
-            return String.localizedStringWithFormat("Unable to delete the webhook %1@ with error %2@", "\(webhookID)", "\(error)")
+            return String.localizedStringWithFormat("Failed to delete the webhook %1@ with error %2@", "\(webhookID)", "\(error)")
         case .httpResponseParseFailed(let message):
             return String.localizedStringWithFormat("Failed to parse the HTTP response '%1@'", message ?? "")
         case .variableValueFailed(let error):
@@ -155,15 +161,19 @@ extension ParticleError: CustomStringConvertible {
         case .librariesRequestFailed(let error):
             return String.localizedStringWithFormat("Failed to obtain the available libraries with error %1@", String(describing: error))
         case .librariesUrlMalformed(let string):
-            return String.localizedStringWithFormat("Unable to construct a valid url for the libraries api using %1@", string)
+            return String.localizedStringWithFormat("Failed to construct a valid url for the libraries api using %1@", string)
         case .libraryVersionsRequestFailed(let string):
-            return String.localizedStringWithFormat("Unable to obtain library versions with error %1@", String(describing: string))
+            return String.localizedStringWithFormat("Failed to obtain library versions with error %1@", String(describing: string))
         case .productsListFailed(let error):
-            return String.localizedStringWithFormat("Unable to list the products with error %1@", String(describing: error))
+            return String.localizedStringWithFormat("Failed to list the products with error %1@", String(describing: error))
         case .productTeamMembersFailed(let error):
             return String.localizedStringWithFormat("Failed to obtain the product team members with error %1@", String(describing: error))
-        case .inviteTeamMember(let error):
+        case .inviteTeamMemberFailed(let error):
             return String.localizedStringWithFormat("Failed to invite team member with error %1@", String(describing: error))
+        case .removeTeamMemberFailed(let error):
+            return String.localizedStringWithFormat("Failed to remove team member with error %1@", String(describing: error))
+        case .invalidUsername:
+            return String.localizedStringWithFormat("Invalid username")
         }
     }
 }
