@@ -105,7 +105,7 @@ public class EventSource: NSObject {
             guard !name.isEmpty, let dateString = dictionary["published_at"] as? String, let date = dateString.dateWithISO8601String,
                 let ttl = dictionary["ttl"], let ttlInt = Int("\(ttl)"),
                 let coreid = dictionary["coreid"]  else {
-                    warn("Unable to create an Event with name \(name) and dictionary \(dictionary)")
+                    warn("Failed to create an Event with name \(name) and dictionary \(dictionary)")
                     return nil
             }
             
