@@ -262,7 +262,21 @@
     {
       "file": "/Users/mvakoc/Documents/particle-swift/Sources/Errors.swift",
       "line": 38,
-      "symbol": "ParticleError.inviteTeamMember",
+      "symbol": "ParticleError.inviteTeamMemberFailed",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/mvakoc/Documents/particle-swift/Sources/Errors.swift",
+      "line": 39,
+      "symbol": "ParticleError.removeTeamMemberFailed",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/mvakoc/Documents/particle-swift/Sources/Errors.swift",
+      "line": 40,
+      "symbol": "ParticleError.invalidUsername",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
