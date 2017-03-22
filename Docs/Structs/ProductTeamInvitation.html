@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>EventSource Class Reference</title>
+    <title>ProductTeamInvitation Struct Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Class/EventSource" class="dashAnchor"></a>
-    <a title="EventSource Class Reference"></a>
+    <a name="//apple_ref/swift/Struct/ProductTeamInvitation" class="dashAnchor"></a>
+    <a title="ProductTeamInvitation Struct Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html"> Docs</a> (76% documented)</p>
@@ -22,7 +22,7 @@
       <p id="breadcrumbs">
         <a href="../index.html"> Reference</a>
         <img id="carat" src="../img/carat.png" />
-        EventSource Class Reference
+        ProductTeamInvitation Struct Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -212,20 +212,14 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>EventSource</h1>
+            <h1>ProductTeamInvitation</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">EventSource</span><span class="p">:</span> <span class="kt">NSObject</span></code></pre>
+                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">ProductTeamInvitation</span></code></pre>
 
                 </div>
               </div>
-            <p>Event source that monitors and notifies on events emitted by monitored devices</p>
-
-<p>Particle Cloud event urls follow the Server-Sent Events spec (<a href="http://www.w3.org/TR/eventsource/">http://www.w3.org/TR/eventsource/</a>)</p>
-
-<p>Event sources are based on a single URL and are authenticated using an access token specified
-at the time of creation.  Event sources may be started and stopped repeatedly though they are
-useful only for the lifetime of the access token provided</p>
+            <p>A product team invitation</p>
 
           </section>
           <section class="section task-group-section">
@@ -234,9 +228,9 @@ useful only for the lifetime of the access token provided</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:ZvC13ParticleSwift11EventSource16ParticleEventKeySS"></a>
-                    <a name="//apple_ref/swift/Variable/ParticleEventKey" class="dashAnchor"></a>
-                    <a class="token" href="#/s:ZvC13ParticleSwift11EventSource16ParticleEventKeySS">ParticleEventKey</a>
+                    <a name="/s:VV13ParticleSwift21ProductTeamInvitation6Invite"></a>
+                    <a name="//apple_ref/swift/Struct/Invite" class="dashAnchor"></a>
+                    <a class="token" href="#/s:VV13ParticleSwift21ProductTeamInvitation6Invite">Invite</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -244,14 +238,15 @@ useful only for the lifetime of the access token provided</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The key in the user info of the Notification.Name.ParticleEvent containing the actual Event</p>
+                        <p>A product invitation</p>
 
+                        <a href="../Structs/ProductTeamInvitation/Invite.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">ParticleEventKey</span> <span class="o">=</span> <span class="s">"ParticleEventKey"</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Invite</span></code></pre>
 
                         </div>
                       </div>
@@ -261,9 +256,9 @@ useful only for the lifetime of the access token provided</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vC13ParticleSwift11EventSource8delegateXwGSqPS_19EventSourceDelegate__"></a>
-                    <a name="//apple_ref/swift/Property/delegate" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vC13ParticleSwift11EventSource8delegateXwGSqPS_19EventSourceDelegate__">delegate</a>
+                    <a name="/s:vV13ParticleSwift21ProductTeamInvitation2idSS"></a>
+                    <a name="//apple_ref/swift/Property/id" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vV13ParticleSwift21ProductTeamInvitation2idSS">id</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -271,14 +266,14 @@ useful only for the lifetime of the access token provided</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The delegate to receive notification of event source actions</p>
+                        <p>The unique identifier of the team memeber</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">delegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/EventSourceDelegate.html">EventSourceDelegate</a></span><span class="p">?</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">id</span><span class="p">:</span> <span class="kt">String</span></code></pre>
 
                         </div>
                       </div>
@@ -288,9 +283,9 @@ useful only for the lifetime of the access token provided</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:VC13ParticleSwift11EventSource5Event"></a>
-                    <a name="//apple_ref/swift/Struct/Event" class="dashAnchor"></a>
-                    <a class="token" href="#/s:VC13ParticleSwift11EventSource5Event">Event</a>
+                    <a name="/s:vV13ParticleSwift21ProductTeamInvitation7createdV10Foundation4Date"></a>
+                    <a name="//apple_ref/swift/Property/created" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vV13ParticleSwift21ProductTeamInvitation7createdV10Foundation4Date">created</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -298,15 +293,14 @@ useful only for the lifetime of the access token provided</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Represents an event received from an EventSource (Particle Cloud)</p>
+                        <p>The creation date of the invitation</p>
 
-                        <a href="../Classes/EventSource/Event.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Event</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">created</span><span class="p">:</span> <span class="kt">Date</span></code></pre>
 
                         </div>
                       </div>
@@ -316,9 +310,9 @@ useful only for the lifetime of the access token provided</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vC13ParticleSwift11EventSource3urlV10Foundation3URL"></a>
-                    <a name="//apple_ref/swift/Property/url" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vC13ParticleSwift11EventSource3urlV10Foundation3URL">url</a>
+                    <a name="/s:vV13ParticleSwift21ProductTeamInvitation7updatedV10Foundation4Date"></a>
+                    <a name="//apple_ref/swift/Property/updated" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vV13ParticleSwift21ProductTeamInvitation7updatedV10Foundation4Date">updated</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -326,14 +320,14 @@ useful only for the lifetime of the access token provided</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The URL of the event emitter</p>
+                        <p>The last modified date of the invitation</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">url</span><span class="p">:</span> <span class="kt">URL</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">updated</span><span class="p">:</span> <span class="kt">Date</span></code></pre>
 
                         </div>
                       </div>
@@ -343,9 +337,9 @@ useful only for the lifetime of the access token provided</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:OC13ParticleSwift11EventSource5State"></a>
-                    <a name="//apple_ref/swift/Enum/State" class="dashAnchor"></a>
-                    <a class="token" href="#/s:OC13ParticleSwift11EventSource5State">State</a>
+                    <a name="/s:vV13ParticleSwift21ProductTeamInvitation8usernameSS"></a>
+                    <a name="//apple_ref/swift/Property/username" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vV13ParticleSwift21ProductTeamInvitation8usernameSS">username</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -353,22 +347,14 @@ useful only for the lifetime of the access token provided</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The state of an event source</p>
+                        <p>Username of the team member</p>
 
-<ul>
-<li>inactive      : Not actively attempting to use the event source</li>
-<li>connecting    : Attempting to connect to the event source</li>
-<li>connected     : Actively connected and receiving events</li>
-<li>disconnecting : Terminating the connection</li>
-</ul>
-
-                        <a href="../Classes/EventSource/State.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">State</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">username</span><span class="p">:</span> <span class="kt">String</span></code></pre>
 
                         </div>
                       </div>
@@ -378,9 +364,9 @@ useful only for the lifetime of the access token provided</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vC13ParticleSwift11EventSource5stateOS0_5State"></a>
-                    <a name="//apple_ref/swift/Property/state" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vC13ParticleSwift11EventSource5stateOS0_5State">state</a>
+                    <a name="/s:vV13ParticleSwift21ProductTeamInvitation19organizationInvitesGSaVS0_6Invite_"></a>
+                    <a name="//apple_ref/swift/Property/organizationInvites" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vV13ParticleSwift21ProductTeamInvitation19organizationInvitesGSaVS0_6Invite_">organizationInvites</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -388,68 +374,14 @@ useful only for the lifetime of the access token provided</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The current state</p>
+                        <p>Pending invitations to product teams</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">internal(set)</span> <span class="k">var</span> <span class="nv">state</span><span class="p">:</span> <span class="kt"><a href="../Classes/EventSource/State.html">State</a></span> <span class="o">=</span> <span class="o">.</span><span class="n">inactive</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FC13ParticleSwift11EventSource5startFT_T_"></a>
-                    <a name="//apple_ref/swift/Method/start()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC13ParticleSwift11EventSource5startFT_T_">start()</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Connect and start emitting events</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">start</span><span class="p">()</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FC13ParticleSwift11EventSource4stopFT_T_"></a>
-                    <a name="//apple_ref/swift/Method/stop()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC13ParticleSwift11EventSource4stopFT_T_">stop()</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Stop any active url sessions and terminate sending events</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">stop</span><span class="p">()</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">organizationInvites</span> <span class="o">=</span> <span class="p">[</span><span class="kt"><a href="../Structs/ProductTeamInvitation/Invite.html">Invite</a></span><span class="p">]()</span></code></pre>
 
                         </div>
                       </div>
@@ -473,20 +405,14 @@ useful only for the lifetime of the access token provided</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Parse the incoming string.  The method should be invoked only within the context of the self.queue dispatch queue</p>
-
-<div class="aside aside-parameter">
-    <p class="aside-title">Parameter</p>
-    Parameter string: the incoming string
-
-</div>
+                        <p>The product teams the to which user currently belongs.  TODO:  strongly type</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">==</span><span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">EventSource</span><span class="o">.</span><span class="kt"><a href="../Classes/EventSource/Event.html">Event</a></span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">EventSource</span><span class="o">.</span><span class="kt"><a href="../Classes/EventSource/Event.html">Event</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">==</span><span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">ProductTeamInvitation</span><span class="o">.</span><span class="kt"><a href="../Structs/ProductTeamInvitation/Invite.html">Invite</a></span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">ProductTeamInvitation</span><span class="o">.</span><span class="kt"><a href="../Structs/ProductTeamInvitation/Invite.html">Invite</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
 
                         </div>
                       </div>
@@ -533,9 +459,9 @@ useful only for the lifetime of the access token provided</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC13ParticleSwift11EventSource10urlSessionFTCSo10URLSession4taskCSo14URLSessionTask20didCompleteWithErrorGSqPs5Error___T_"></a>
-                    <a name="//apple_ref/swift/Method/urlSession(_:task:didCompleteWithError:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC13ParticleSwift11EventSource10urlSessionFTCSo10URLSession4taskCSo14URLSessionTask20didCompleteWithErrorGSqPs5Error___T_">urlSession(_:task:didCompleteWithError:)</a>
+                    <a name="/s:FV13ParticleSwift21ProductTeamInvitationcFT4withGVs10DictionarySSP___GSqS0__"></a>
+                    <a name="//apple_ref/swift/Method/init(with:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FV13ParticleSwift21ProductTeamInvitationcFT4withGVs10DictionarySSP___GSqS0__">init(with:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -543,45 +469,35 @@ useful only for the lifetime of the access token provided</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Create a Product with a dictionary</p>
+
+<p>The dictionary looks like the following</p>
+
+<pre class="highlight json"><code><span class="w"> </span><span class="p">{</span><span class="w">
+   </span><span class="nt">"_id"</span><span class="p">:</span><span class="s2">"12351fc561a46af606000abc"</span><span class="p">,</span><span class="w">
+   </span><span class="nt">"created_at"</span><span class="p">:</span><span class="s2">"2014-08-08T19:06:45.000Z"</span><span class="p">,</span><span class="w">
+   </span><span class="nt">"updated_at"</span><span class="p">:</span><span class="s2">"2017-03-14T22:38:40.028Z"</span><span class="p">,</span><span class="w">
+   </span><span class="nt">"username"</span><span class="p">:</span><span class="s2">"jeff.m.eiden@gmail.com"</span><span class="p">,</span><span class="w">
+   </span><span class="nt">"orgInvites"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+     </span><span class="p">{</span><span class="w">
+       </span><span class="nt">"org"</span><span class="p">:</span><span class="s2">"456bcd"</span><span class="p">,</span><span class="w">
+       </span><span class="nt">"slug"</span><span class="p">:</span><span class="s2">"my-product"</span><span class="p">,</span><span class="w">
+       </span><span class="nt">"product"</span><span class="p">:</span><span class="s2">"3333999"</span><span class="p">,</span><span class="w">
+       </span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"My Product"</span><span class="p">,</span><span class="w">
+       </span><span class="nt">"invitedBy"</span><span class="p">:</span><span class="s2">"jeff@particle.io"</span><span class="p">,</span><span class="w">
+       </span><span class="nt">"invitedOn"</span><span class="p">:</span><span class="s2">"2017-01-18T18:53:00.235Z"</span><span class="w">
+     </span><span class="p">}</span><span class="w">
+   </span><span class="p">],</span><span class="w">
+   </span><span class="nt">"orgs"</span><span class="p">:[]</span><span class="w">
+ </span><span class="p">}</span><span class="w">
+</span></code></pre>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">EventSource</span><span class="p">:</span> <span class="kt">NSObject</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FC13ParticleSwift11EventSource10urlSessionFTCSo10URLSession8dataTaskCSo18URLSessionDataTask10didReceiveCSo11URLResponse17completionHandlerFOS1_19ResponseDispositionT__T_"></a>
-                    <a name="//apple_ref/swift/Method/urlSession(_:dataTask:didReceive:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC13ParticleSwift11EventSource10urlSessionFTCSo10URLSession8dataTaskCSo18URLSessionDataTask10didReceiveCSo11URLResponse17completionHandlerFOS1_19ResponseDispositionT__T_">urlSession(_:dataTask:didReceive:completionHandler:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">EventSource</span><span class="p">:</span> <span class="kt">NSObject</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">?(</span><span class="n">with</span> <span class="nv">dictionary</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt">Any</span><span class="p">])</span></code></pre>
 
                         </div>
                       </div>
@@ -591,9 +507,9 @@ useful only for the lifetime of the access token provided</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FC13ParticleSwift11EventSource10urlSessionFTCSo10URLSession8dataTaskCSo18URLSessionDataTask10didReceiveV10Foundation4Data_T_"></a>
-                    <a name="//apple_ref/swift/Method/urlSession(_:dataTask:didReceive:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC13ParticleSwift11EventSource10urlSessionFTCSo10URLSession8dataTaskCSo18URLSessionDataTask10didReceiveV10Foundation4Data_T_">urlSession(_:dataTask:didReceive:)</a>
+                    <a name="/s:vV13ParticleSwift21ProductTeamInvitation10dictionaryGVs10DictionarySSP__"></a>
+                    <a name="//apple_ref/swift/Property/dictionary" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vV13ParticleSwift21ProductTeamInvitation10dictionaryGVs10DictionarySSP__">dictionary</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -601,46 +517,14 @@ useful only for the lifetime of the access token provided</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>The dproduct as a dictionary using keys compatible with the original web service</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">EventSource</span><span class="p">:</span> <span class="kt">NSObject</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:VC13ParticleSwift11EventSource6Config"></a>
-                    <a name="//apple_ref/swift/Struct/Config" class="dashAnchor"></a>
-                    <a class="token" href="#/s:VC13ParticleSwift11EventSource6Config">Config</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>EventSource Configuration</p>
-
-                        <a href="../Classes/EventSource/Config.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Config</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">dictionary</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt">Any</span><span class="p">]</span></code></pre>
 
                         </div>
                       </div>

@@ -253,6 +253,20 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/mvakoc/Documents/particle-swift/Sources/Errors.swift",
+      "line": 37,
+      "symbol": "ParticleError.productTeamMembersFailed",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/mvakoc/Documents/particle-swift/Sources/Errors.swift",
+      "line": 38,
+      "symbol": "ParticleError.inviteTeamMember",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/mvakoc/Documents/particle-swift/Sources/Events.swift",
       "line": 143,
       "symbol": "EventSource.State.connected",
@@ -558,13 +572,6 @@
       "line": 37,
       "symbol": "Product.ProductType.industrial",
       "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/mvakoc/Documents/particle-swift/Sources/Products.swift",
-      "line": 158,
-      "symbol": "ParticleCloud.products(_:completion:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
