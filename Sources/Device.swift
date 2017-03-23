@@ -382,15 +382,6 @@ extension ParticleCloud {
                         return completion(.success(j.flatMap({ return DeviceInformation(with: $0)})))
                     } else {
                         
-                        if let response = response as? HTTPURLResponse, response.statusCode == 401, let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String : Any],  let j = json, j["error"] as? String  == "invalid_token" {
-                            
-                            
-                            
-                            
-                        }
-                        
-                        
-                        
                         let message = data != nil ? String(data: data!, encoding: String.Encoding.utf8) ?? "" : ""
                         
                         warn("failed to obtain devices with response: \(String(describing: response)) and message body \(String(describing: message))")
