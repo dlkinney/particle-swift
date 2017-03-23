@@ -78,6 +78,10 @@ public class ParticleCloud: WebServiceCallable {
             
             trace( "Get access tokens", request: request, data: data, response: response, error: error )
             
+            if let error = self.checkForInvalidToken(request: request, response: response, data: data) {
+                return completion(.failure(error))
+            }
+            
             if let error = error {
                 return completion(.failure(ParticleError.listAccessTokensFailed(error)))
             }
@@ -89,6 +93,28 @@ public class ParticleCloud: WebServiceCallable {
             }
         })
         task.resume()
+    }
+    
+    /// Validates the returned resposne did not identify an invalid token
+    ///
+    /// If an invalid token is discovered by virtue of the response being a 401 code and the 
+    /// returned result containing "invalid_token" the secure storage delegate is instructed to
+    /// remove any persisted token.  Subsequent requests may result in a new token being obtained
+    /// without any further use of the new invalid token
+    
+    /// - Parameters:
+    ///   - request: The request that initiated the service call
+    ///   - response: The response received, if any
+    ///   - data: The body of the response, if any
+    /// - Returns: An error indicating the problem, or nil if the token was O
+    func checkForInvalidToken(request: URLRequest, response: URLResponse?, data: Data?) -> Error? {
+        
+        if let response = response as? HTTPURLResponse, response.statusCode == 401, let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String : Any],  let j = json, j["error"] as? String  == "invalid_token" {
+            warn("The request \(request) detected an invalid token.  The stored token will no longer be used.")
+            secureStorage?.updateOAuthToken(nil, forRealm: ParticleSwiftInfo.realm)
+            return ParticleError.invalidToken
+        }
+        return nil
     }
 }
 

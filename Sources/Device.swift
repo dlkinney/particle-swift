@@ -364,6 +364,13 @@ extension ParticleCloud {
                     
                     trace( "Creating particle devices", request: request, data: data, response: response, error: error)
                     
+                    if let error = self.checkForInvalidToken(request: request, response: response, data: data) {
+                        return completion(.failure(error))
+                    }
+                    
+                    if let error = self.checkForInvalidToken(request: request, response: response, data: data) {
+                        return completion(.failure(error))
+                    }
                     
                     if let error = error {
                         return completion(.failure(ParticleError.deviceListFailed(error)))
@@ -374,6 +381,15 @@ extension ParticleCloud {
                         
                         return completion(.success(j.flatMap({ return DeviceInformation(with: $0)})))
                     } else {
+                        
+                        if let response = response as? HTTPURLResponse, response.statusCode == 401, let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String : Any],  let j = json, j["error"] as? String  == "invalid_token" {
+                            
+                            
+                            
+                            
+                        }
+                        
+                        
                         
                         let message = data != nil ? String(data: data!, encoding: String.Encoding.utf8) ?? "" : ""
                         
@@ -415,6 +431,11 @@ extension ParticleCloud {
                 let task = self.urlSession.dataTask(with: request) { (data, response, error) in
                     
                     trace( "Get device detail information", request: request, data: data, response: response, error: error)
+                    
+                    if let error = self.checkForInvalidToken(request: request, response: response, data: data) {
+                        return completion(.failure(error))
+                    }
+                    
                     if let error = error {
                         return completion(.failure(ParticleError.deviceDetailedInformationFailed(error)))
                     }
@@ -458,6 +479,9 @@ extension ParticleCloud {
                     
                     trace( "Call function", request: request, data: data, response: response, error: error)
                     
+                    if let error = self.checkForInvalidToken(request: request, response: response, data: data) {
+                        return completion(.failure(error))
+                    }
                     
                     if let error = error {
                         return completion(.failure(ParticleError.callFunctionFailed(error)))
@@ -494,6 +518,10 @@ extension ParticleCloud {
                 let task = self.urlSession.dataTask(with: request) { (data, response, error) in
                     
                     trace( "Get variable value", request: request, data: data, response: response, error: error)
+                    
+                    if let error = self.checkForInvalidToken(request: request, response: response, data: data) {
+                        return completion(.failure(error))
+                    }
                     
                     if let error = error {
                         return completion(.failure(ParticleError.variableValueFailed(error)))
@@ -533,6 +561,10 @@ extension ParticleCloud {
                     
                     trace( "Claim device", request: request, data: data, response: response, error: error)
                     
+                    if let error = self.checkForInvalidToken(request: request, response: response, data: data) {
+                        return completion(.failure(error))
+                    }
+                    
                     if let error = error {
                         return completion(.failure(ParticleError.claimDeviceFailed(error)))
                     }
@@ -564,6 +596,10 @@ extension ParticleCloud {
                 let task = self.urlSession.dataTask(with: request) { (data, response, error) in
                     
                     trace( "Unclaim device", request: request, data: data, response: response, error: error)
+                    
+                    if let error = self.checkForInvalidToken(request: request, response: response, data: data) {
+                        return completion(.failure(error))
+                    }
                     
                     if let error = error {
                         return completion(.failure(ParticleError.unclaimDeviceFailed(error)))
@@ -602,6 +638,10 @@ extension ParticleCloud {
                 let task = self.urlSession.dataTask(with: request) { (data, response, error) in
                     
                     trace( "Transfer device", request: request, data: data, response: response, error: error)
+                    
+                    if let error = self.checkForInvalidToken(request: request, response: response, data: data) {
+                        return completion(.failure(error))
+                    }
                     
                     if let error = error {
                         return completion(.failure(ParticleError.transferDeviceFailed(error)))
@@ -652,6 +692,10 @@ extension ParticleCloud {
                 let task = self.urlSession.dataTask(with: request) { (data, response, error) in
                     
                     trace("Create claim code", request: request, data: data, response: response, error: error)
+                    
+                    if let error = self.checkForInvalidToken(request: request, response: response, data: data) {
+                        return completion(.failure(error))
+                    }
                     
                     if let error = error {
                         return completion(.failure(ParticleError.createClaimCode(error)))

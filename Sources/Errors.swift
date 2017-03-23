@@ -40,7 +40,8 @@ public enum ParticleError: Error {
     invalidUsername,
     downloadBinaryFailed(Error),
     downloadError,
-    flashDeviceFailed(Error)
+    flashDeviceFailed(Error),
+    invalidToken
 }
 
 // Linux doesn't support variadic lists including strings, reference https://bugs.swift.org/browse/SR-957
@@ -115,6 +116,8 @@ extension ParticleError: CustomStringConvertible {
             return "Failed to download binary"
         case .flashDeviceFailed(let error):
             return "Failed to flash device with error \(error)"
+        case .invalidToken:
+            return "Failed to complete request due to an invalid token"
         }
     }
 }
@@ -189,6 +192,9 @@ extension ParticleError: CustomStringConvertible {
             return String.localizedStringWithFormat("Failed to download binary")
         case .flashDeviceFailed:
             return String.localizedStringWithFormat("Failed to flash device with error %1@", String(describing: error))
+        case .invalidToken:
+            return String.localizedStringWithFormat("Failed to complete request due to an invalid token")
+            
         }
     }
 }

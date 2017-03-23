@@ -225,6 +225,10 @@ extension ParticleCloud {
                     
                     trace( "Compiled \(files.count) files", request: request, data: data, response: response, error: error)
                     
+                    if let error = self.checkForInvalidToken(request: request, response: response, data: data) {
+                        return completion(.failure(error))
+                    }
+                    
                     if let error = error {
                         return completion(.failure(ParticleError.compileRequestFailed("\(error)")))
                     }
@@ -349,7 +353,7 @@ extension ParticleCloud {
                 let task = self.urlSession.downloadTask(with: request, completionHandler: { (url, response, error) in
                     
                     trace( "Downloaded binary \(binary)", request: request, url: url, response: response, error: error)
-                    
+                                       
                     if let error = error {
                         return completion(.failure(ParticleError.downloadBinaryFailed(error)))
                     }
@@ -417,7 +421,11 @@ extension ParticleCloud {
               let task = self.urlSession.dataTask(with: request) { (data, response, error) in
                 
                     trace( "Flashed device \(deviceId)", request: request, data: data, response: response, error: error)
-                    
+                
+                    if let error = self.checkForInvalidToken(request: request, response: response, data: data) {
+                        return completion(.failure(error))
+                    }
+                
                     if let error = error {
                         return completion(.failure(ParticleError.flashDeviceFailed(error)))
                     }

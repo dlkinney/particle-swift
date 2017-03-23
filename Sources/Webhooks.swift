@@ -361,6 +361,10 @@ extension ParticleCloud {
                     
                     trace( "Created webhook", request: request, data: data, response: response, error: error)
                     
+                    if let error = self.checkForInvalidToken(request: request, response: response, data: data) {
+                        return completion(.failure(error))
+                    }
+                    
                     if let error = error {
                         return completion(.failure(ParticleError.createWebhookFailed(error)))
                     }
@@ -406,6 +410,10 @@ extension ParticleCloud {
                     
                     trace( "Delete webhook", request: request, data: data, response: response, error: error)
                     
+                    if let error = self.checkForInvalidToken(request: request, response: response, data: data) {
+                        return completion(.failure(error))
+                    }
+                    
                     if let error = error {
                         return completion(.failure(ParticleError.createWebhookFailed(error)))
                     }
@@ -450,6 +458,10 @@ extension ParticleCloud {
                     
                     trace( "Get a webhook \(webhookID)", request: request, data: data, response: response, error: error)
                     
+                    if let error = self.checkForInvalidToken(request: request, response: response, data: data) {
+                        return completion(.failure(error))
+                    }
+                    
                     if let error = error {
                         return completion(.failure(ParticleError.webhookListFailed(error)))
                     }
@@ -490,6 +502,10 @@ extension ParticleCloud {
                 let task = self.urlSession.dataTask(with: request) { (data, response, error) in
                     
                     trace( "Listing all webhooks", request: request, data: data, response: response, error: error)
+                    
+                    if let error = self.checkForInvalidToken(request: request, response: response, data: data) {
+                        return completion(.failure(error))
+                    }
                     
                     if let error = error {
                         return completion(.failure(ParticleError.webhookListFailed(error)))
