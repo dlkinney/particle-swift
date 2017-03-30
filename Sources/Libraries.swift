@@ -25,11 +25,14 @@ public struct Library {
     /// https://docs.particle.io/reference/api/#get-library-details
     public var attributes: [String : Any]?
     
+    /// The dictionary representation of the library
+    public var dictionary: [String : Any]
+    
     /// Optionally creates a Library instance from the specified dictionary.
     /// - dictionary: dictionary representation of the library
     ///
     /// Returns nil if the required keys are not in the dictionary
-    init?(dictionary: [String: Any]) {
+    public init?(dictionary: [String: Any]) {
         
         guard let id = dictionary["id"] as? String,
             let linkDownload1 = dictionary["links"] as? [String : Any],
@@ -41,6 +44,7 @@ public struct Library {
         self.id = id
         self.linkDownload = linkDownload
         self.attributes = dictionary["attributes"] as? [String : Any]
+        self.dictionary = dictionary
     }
     
     
