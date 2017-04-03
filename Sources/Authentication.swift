@@ -157,12 +157,12 @@ extension OAuthTokenListEntry: Equatable {
     }
 }
 
-//extension OAuthTokenListEntry: Hashable {
-//    
-//    public var hashValue: Int {
-//        return accessToken.hashValue + expires.hashValue + client.hashValue
-//    }
-//}
+extension OAuthTokenListEntry: Hashable {
+    
+    public var hashValue: Int {
+        return accessToken.hashValue + expires.hashValue + client.hashValue
+    }
+}
 
 /// Abstraction for services that provide OAuth based uathentication.  OAuthAutheticable are objects
 /// that can request, process, and use credentials to validate or create OAuth tokens and store them
