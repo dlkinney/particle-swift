@@ -287,13 +287,18 @@ extension OAuthAuthenticatable {
                 return completion(.failure(ParticleError.oauthTokenCreationFailed(error)))
             }
             
-            if let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String : Any],  let j = json,
-                let token = OAuthToken(with: j) {
-                trace("Created an OAuth token \(token.dictionary)")
-                completion(.success(token))
-            } else {
-                return completion(.failure(ParticleError.oauthTokenCreationFailed(ParticleError.oauthTokenParseFailed)))
+            if let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String : Any],  let j = json {
+                
+                if let token = OAuthToken(with: j) {
+                    trace("Created an OAuth token \(token.dictionary)")
+                    return completion(.success(token))
+                }
+                
+                if let error = j["error"] as? String, let errorDescription = j["error_description"] as? String {
+                    return completion(.failure(ParticleError.oauthTokenCreationFailed(ParticleError.particleError(error, errorDescription))))
+                }
             }
+            return completion(.failure(ParticleError.oauthTokenCreationFailed(ParticleError.oauthTokenParseFailed)))
         }        
         task.resume()
     }
