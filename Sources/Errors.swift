@@ -17,6 +17,7 @@ public enum ParticleError: Error {
     deviceInformationFailed(String, Error),
     oauthTokenCreationFailed(Error),
     oauthTokenParseFailed,
+    oauthTokenDeletionFailed(Error),
     invalidURLRequest(Error),
     claimDeviceFailed(Error),
     transferDeviceFailed(Error),
@@ -42,7 +43,8 @@ public enum ParticleError: Error {
     downloadError,
     flashDeviceFailed(Error),
     invalidToken,
-    particleError(String, String)
+    particleError(String, String),
+    genericError
 }
 
 // Linux doesn't support variadic lists including strings, reference https://bugs.swift.org/browse/SR-957
@@ -67,6 +69,8 @@ extension ParticleError: CustomStringConvertible {
             return "The request to obtain detailed device information failed with error: \(error)"
         case .oauthTokenCreationFailed(let error):
             return "Failed to create an OAuth token with error: \(error)"
+        case .oauthTokenDeletionFailed(let error):
+            return "Failed to delete an OAuth token with error: \(error)"
         case .oauthTokenParseFailed:
             return "The HTTP response could not be parsed as a valid token"
         case .invalidURLRequest(let error):
@@ -120,7 +124,9 @@ extension ParticleError: CustomStringConvertible {
         case .invalidToken:
             return "Failed to complete request due to an invalid token"
         case .particleError(let errorCode, let errorDescription):
-            return String.localizedStringWithFormat("Received the error \(errorCode): \(errorDescription)")
+            return "Received the error \(errorCode): \(errorDescription)"
+        case .genericError:
+            return "An unexpected error occurred"
         }
     }
 }
@@ -145,6 +151,8 @@ extension ParticleError: CustomStringConvertible {
             return String.localizedStringWithFormat("The request to obtain detailed device information failed with error: %1@", "\(error)")
         case .oauthTokenCreationFailed(let error):
             return String.localizedStringWithFormat("Failed to create an OAuth token with error: %1@", "\(error)")
+        case .oauthTokenDeletionFailed(let error):
+            return "Failed to delete an OAuth token with error: \(error)"            
         case .oauthTokenParseFailed:
             return String.localizedStringWithFormat("The HTTP response could not be parsed as a valid token")
         case .invalidURLRequest(let error):
@@ -199,6 +207,8 @@ extension ParticleError: CustomStringConvertible {
             return String.localizedStringWithFormat("Failed to complete request due to an invalid token")
         case .particleError(let errorCode, let errorDescription):
             return String.localizedStringWithFormat("Received the error %1@: %2@", errorCode, errorDescription)
+        case .genericError:
+            return String.localizedStringWithFormat("An unexpected error occurred")
         }
     }
 }

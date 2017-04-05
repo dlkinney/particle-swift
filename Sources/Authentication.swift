@@ -164,7 +164,7 @@ extension OAuthTokenListEntry: Hashable {
     }
 }
 
-/// Abstraction for services that provide OAuth based uathentication.  OAuthAutheticable are objects
+/// Abstraction for services that provide OAuth based authentication.  OAuthAutheticable are objects
 /// that can request, process, and use credentials to validate or create OAuth tokens and store them
 /// for subsequent use
 public protocol OAuthAuthenticatable: class, WebServiceCallable {
@@ -217,12 +217,21 @@ public protocol OAuthAuthenticatable: class, WebServiceCallable {
     /// - parameter expiresAt: the date at which the token should expire.
     /// - parameter completion: completion handler.  Contains a Result enum with the OAuthToken or error encountered
     func createOAuthToken(_ expiresIn: TimeInterval, expiresAt: Date?, completion: @escaping (Result<OAuthToken>) -> Void )
+    
+    /// Deletes the specified OAuth token
+    ///
+    /// - Parameters:
+    ///   - token: The token to remove
+    ///   - completion: the result of the removal.  If successfull the result will be true
+    func deleteOAuthToken(string token: String, completion: @escaping (Result<Bool>) -> Void )
+    
 }
 
 
 
 extension OAuthAuthenticatable {
     
+    /// The default amount of time
     public var defaultTokenExpiration: TimeInterval {
         return 60*60*24
     }
@@ -302,5 +311,55 @@ extension OAuthAuthenticatable {
         }        
         task.resume()
     }
+    
+    public func deleteOAuthToken(string token: String, completion: @escaping (Result<Bool>) -> Void ) {
+        
+        guard let username = secureStorage?.username(self.realm), let password = secureStorage?.password(self.realm) else {
+            return dispatchQueue.async { completion(.failure(ParticleError.missingCredentials)) }
+        }
+        
+        let basicAuthCredentials = "\(username):\(password)"
+        guard let data = basicAuthCredentials.data(using: String.Encoding.utf8) else {
+            return
+        }
+        
+        let base64AuthCredentials = data.base64EncodedString(options: [])
+        
+        var requesta = URLRequest(url: self.baseURL.appendingPathComponent("v1/access_tokens/\(token)"))
+        
+        requesta.setValue("Basic \(base64AuthCredentials)", forHTTPHeaderField: "Authorization")
+        requesta.httpMethod = "DELETE"
+        
+        // Work around a compiler crash bug on Linux by preventing the capture of a mutable variable by ref
+        // and simply capture a let instead
+        let request = requesta
+        
+        let task = self.urlSession.dataTask(with: request) { (data, response, error) in
+            
+            trace( "Deleting an OAuth token", request: request, data: data, response: response, error: error)
+            
+            if let error = error {
+                return completion(.failure(ParticleError.oauthTokenDeletionFailed(error)))
+            }
+            
+            if let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String : Any],  let j = json {
+                
+                if let ok = j["ok"] as? Bool, ok == true {
+                    return completion(.success(true))
+                }
+                
+                if let ok = j["ok"] as? String, ok == "true" {
+                    return completion(.success(true))
+                }
+                
+                if let error = j["error"] as? String, let errorDescription = j["error_description"] as? String {
+                    return completion(.failure(ParticleError.oauthTokenDeletionFailed(ParticleError.particleError(error, errorDescription))))
+                }
+            }
+            return completion(.failure(ParticleError.oauthTokenDeletionFailed(ParticleError.genericError)))
+        }
+        task.resume()
+    }
+    
 }
 
