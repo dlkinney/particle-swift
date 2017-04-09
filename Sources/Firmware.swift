@@ -120,6 +120,9 @@ public struct BuildIssue {
     
     /// The filename containing the issue
     public var filename: String = ""
+    
+    /// The complete path to the issue
+    public var path: String = ""
     /// The line number of the issue
     public var line: Int = 0
     
@@ -139,7 +142,7 @@ extension BuildIssue: CustomStringConvertible {
 extension BuildIssue: Equatable {
     
     public static func ==(lhs: BuildIssue, rhs: BuildIssue) -> Bool {
-        return lhs.type == rhs.type && lhs.filename == rhs.filename && lhs.line == rhs.line && lhs.column == rhs.column && lhs.message == rhs.message
+        return lhs.type == rhs.type && lhs.filename == rhs.filename && lhs.line == rhs.line && lhs.column == rhs.column && lhs.message == rhs.message && lhs.path == rhs.path
     }
 }
 
@@ -274,11 +277,12 @@ extension ParticleCloud {
                                         continue
                                     }
                                     
-                                    if let links = matches.flatMap({ result -> (String, Int, Int, BuildIssue.IssueType, String)? in
+                                    if let links = matches.flatMap({ result -> (String, Int, Int, BuildIssue.IssueType, String, String)? in
                                         let r1 = result.rangeAt(1)
                                         let start1 = String.UTF16Index(r1.location)
                                         let end1 = String.UTF16Index(r1.location + r1.length)
-                                        let filename = String(line.utf16[start1..<end1])
+                                        let path = String(line.utf16[start1..<end1])
+                                        let filename = path?.components(separatedBy: "/").last
                                         
                                         let r2 = result.rangeAt(2)
                                         let start2 = String.UTF16Index(r2.location)
@@ -301,11 +305,11 @@ extension ParticleCloud {
                                         let end5 = String.UTF16Index(r5.location + r5.length)
                                         let message = String(line.utf16[start5..<end5])
                                         
-                                        guard let f = filename, let l1 = lineNo, let l = Int(l1), let c2 = column, let c = Int(c2),let k2 = kind, let k = BuildIssue.IssueType(rawValue: k2), let m = message  else { print("here");  return nil }
+                                        guard let p = path, let f = filename, let l1 = lineNo, let l = Int(l1), let c2 = column, let c = Int(c2),let k2 = kind, let k = BuildIssue.IssueType(rawValue: k2), let m = message  else { print("here");  return nil }
                                         
-                                        return (f, l, c, k, m)
+                                        return (f, l, c, k, m, p)
                                     }).first {
-                                        let buildIssue = BuildIssue(type: links.3, filename: links.0, line: links.1, column:links.2 , message: links.4)
+                                        let buildIssue = BuildIssue(type: links.3, filename: links.0, path: links.5, line: links.1, column:links.2 , message: links.4)
                                         buildIssues.append(buildIssue)
                                     }
                                     
