@@ -425,6 +425,7 @@ extension EventSource: URLSessionTaskDelegate {
     
     public func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         state = .disconnecting
+        delegate?.stopped(self)
     }
 }
 
@@ -435,6 +436,7 @@ extension EventSource: URLSessionDataDelegate {
         
         trace("EventSource for url \(url) received response \(response)")
         state = .connected
+        delegate?.started(self)
         completionHandler(.allow)
     }
     
