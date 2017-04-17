@@ -17,6 +17,10 @@ extension Notification.Name {
     /// 
     /// The notification is posted shortly before the corresponding delegate function is called
     public static let ParticleEvent = Notification.Name(rawValue: "ParticleEventNotification")
+    
+    /// Sent when the state of an event source changes.  The notification object is the event source.  There
+    /// is no userInfo dictionary
+    public static let EventSourceStateDidChange = Notification.Name(rawValue: "EventSourceStateDidChangeNotification")
 }
 
 /// Delegate protocol for EventSource.  
@@ -147,6 +151,8 @@ public class EventSource: NSObject {
     public internal(set) var state: State = .inactive {
         didSet {
             
+            NotificationCenter.default.post(name: .EventSourceStateDidChange, object: self, userInfo: nil)
+            
             trace("Event source moving from \(oldValue) to \(state)")
             switch (oldValue, state) {
                 
@@ -191,7 +197,6 @@ public class EventSource: NSObject {
                 if let task = task {
                     task.cancel()
                 }
-                state = .inactive
                 
                 
             case (.disconnecting, .connecting):
@@ -220,7 +225,7 @@ public class EventSource: NSObject {
             case (.connecting, .inactive):
                 break
             case (.connected, .inactive):
-                break
+                state = .disconnecting
             case (.disconnecting, .inactive):
                 break
 
@@ -426,6 +431,7 @@ extension EventSource: URLSessionTaskDelegate {
     public func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         state = .disconnecting
         delegate?.stopped(self)
+        state = .inactive
     }
 }
 
