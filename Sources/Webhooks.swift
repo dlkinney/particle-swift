@@ -56,6 +56,9 @@ public struct Webhook {
     /// A customized webhook response event name that your devices can subscribe to
     public var responseTopic: String?
     
+    /// You can use the response template parameter to let the webhook dynamically render a new event response down to your devices. This is just like the custom template variables above, but it applies to what your devices see, instead of what your server sees."
+    public var responseTemplate: String?
+    
     /// A customized webhook error response event name that your devices can subscribe to
     public var errorResponseTopic: String?
     
@@ -272,7 +275,8 @@ public struct Webhook {
         self.headers = dictionary["headers"] as? Dictionary<String,String>
         
         self.responseTopic = dictionary["responseTopic"] as? String
-        self.responseTopic = dictionary["errorResponseTopic"] as? String
+        self.errorResponseTopic = dictionary["errorResponseTopic"] as? String
+        self.responseTemplate = dictionary["responseTemplate"] as? String
         
         // the following are returned only from the GetWebhook command
         if let counters = dictionary["counters"] as? [Dictionary<String,Any>] {
@@ -314,8 +318,9 @@ public struct Webhook {
         if let json = json { ret["json"] = json }
         if let query = query { ret["query"] = query }
         if let headers = headers  { ret["headers "] = headers  }
-        if let responseTopic = responseTopic { ret["errorResponseTopic"] = responseTopic }
-
+        if let responseTopic = responseTopic { ret["responseTopic"] = responseTopic }
+        if let errorResponseTopic = errorResponseTopic { ret["errorResponseTopic"] = errorResponseTopic }
+        if let responseTemplate = responseTemplate { ret["responseTemplate"] = responseTemplate }
         if let counters = counters {
             ret["counters"] = counters.map { $0.jsonRepresentation }
         }
