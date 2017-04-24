@@ -59,6 +59,12 @@ public struct Webhook {
     /// A customized webhook error response event name that your devices can subscribe to
     public var errorResponseTopic: String?
     
+    /// The http basic auth username
+    public var username: String?
+    
+    /// The http basic auth password
+    public var password: String?
+    
     /// If true, will not add the triggering Particle event's data to the webhook request
     public var noDefaults: Bool = false
     
@@ -252,6 +258,11 @@ public struct Webhook {
             self.noDefaults = noDefaults
         }
         
+        if let auth = dictionary["auth"] as? [String : String] {
+            self.username = auth["username"]
+            self.password = auth["password"]
+        }
+        
         if let rejectUnauthorized = dictionary.bool(for: "rejectUnauthorized") {
             self.rejectUnauthorized = rejectUnauthorized
         }
@@ -290,6 +301,12 @@ public struct Webhook {
         ret["noDefaults"] = noDefaults
         ret["rejectUnauthorized"] = rejectUnauthorized
         
+        if username != nil || password != nil {
+            var auth = [String : String]()
+            auth["username"] = username
+            auth["password"] = password
+            ret["auth"] = auth
+        }
         
         if let created = created { ret["created_at"] = created.ISO8601String }
         if let deviceID = deviceID { ret["deviceID"] = deviceID }
