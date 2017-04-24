@@ -21,55 +21,55 @@ public struct Webhook {
     }
     
     /// Unique identifier for the webhook
-    var id: String
+    public var id: String
     
     /// The date the webhook was created
-    var created: Date?
+    public var created: Date?
     
     // The name of the Particle event that will trigger the webhook
-    var event: String
+    public var event: String
     
     /// The web address that will be targeted when the webhook is triggered
-    var url: URL
+    public var url: URL
     
     /// Type of web request triggered by the webhook that can be set
-    var requestType: RequestType = .get
+    public var requestType: RequestType = .get
     
     /// Limits the webhook triggering to devices owned by you
-    var mydevices: Bool = true
+    public var mydevices: Bool = true
     
     /// Limits the webhook triggering to a single device
-    var deviceID: String?
+    public var deviceID: String?
     
     /// Custom data sent as JSON with the request
-    var json: [String : Any]?
+    public var json: [String : Any]?
     
     /// Custom data sent a form with the request
-    var form: [String : Any]?
+    public var form: [String : Any]?
     
     /// Query parameters added to the URL of the request
-    var query: [String : Any]?
+    public var query: [String : Any]?
     
     /// Custom HTTP headers included with the request
-    var headers: [String : String]?
+    public var headers: [String : String]?
     
     /// A customized webhook response event name that your devices can subscribe to
-    var responseTopic: String?
+    public var responseTopic: String?
     
     /// A customized webhook error response event name that your devices can subscribe to
-    var errorResponseTopic: String?
+    public var errorResponseTopic: String?
     
     /// If true, will not add the triggering Particle event's data to the webhook request
-    var noDefaults: Bool = false
+    public var noDefaults: Bool = false
     
     /// If false, skip SSL certificate validation of the target URL
-    var rejectUnauthorized: Bool = true
+    public var rejectUnauthorized: Bool = true
     
     /// The counters returned by the get webhook command
-    var counters: [Counter]?
+    public var counters: [Counter]?
     
     /// The log entries returned by the get webhook command
-    var logs: [Log]?
+    public var logs: [Log]?
     
     /// Webhook Counter
     public struct Counter {
