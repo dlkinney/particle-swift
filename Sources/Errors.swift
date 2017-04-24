@@ -109,7 +109,7 @@ extension ParticleError: CustomStringConvertible {
             return "Failed to list the products with error: \(error)"
         case .productTeamMembersFailed(let error):
             return "Failed to obtain the product team members with error: \(error)"
-        case .inviteTeamMembeFailed(let error):
+        case .inviteTeamMemberFailed(let error):
             return "Failed to invite team member with error: \(error)"
         case .removeTeamMemberFailed(let error):
             return "Failed to remove team member with error: \(error)"
