@@ -157,11 +157,11 @@ Swift package manager based projects utilize only tagged releases that match the
 
 Linux Support
 -------
-particle-swift (and particle-swift-cli) currently compile and function on Linux.  Known bugs exist in 3.0.1 and 3.0.2 verions of swift on Linux that can prevent HTTP headers from being properly included in requests, which is extremely significant to this library.  As such a recent Swift snapshots (later than ~ Oct 20, 2016) resolve this issue.
+particle-swift (and particle-swift-cli) currently compile and function on Linux.  
 
 Linux support is an important long term goal of this project and every effort is made to make it work as well on Linux as on Apple platforms.  Swift on Linux is rather unstable IMHO and the focus of Linux support will be concerned only with using recent Swift builds.
 
-The most recent Swift build known to work is swift-DEVELOPMENT-SNAPSHOT-2016-11-15-a-ubuntu16.04.
+The most recent Swift build known to work is swift 3.1 release.
 
 Roadmap
 -------
