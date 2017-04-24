@@ -8,6 +8,14 @@
 
 import Foundation
 
+#if os(Linux)
+// Linux defines range(at: idx) while Apple platforms use rangeAt(_ idx)
+extension TextCheckingResult {
+    func rangeAt(_ idx: Int) -> NSRange {
+        return range(at: idx)
+    }
+}
+#endif
 
 /// Representation of a compilable source file
 public struct SourceFile {
