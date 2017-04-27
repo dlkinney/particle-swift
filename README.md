@@ -1,8 +1,8 @@
 # particle-swift
 
-Swift 3.0 Package for interacting with Particle Cloud services 
+Swift 3.0 Package for interacting with Particle Cloud services.  particle-swift is the engine powering the commerical [SpeckCode](https://www.speckcode.com/) IDE and Particle device manager.
 
-*Compatibility:* Xcode 8 (Swift 3.0) or the equivalent open source variant of Swift is required.
+*Compatibility:* Xcode 8.3+ (Swift 3.1) or the equivalent open source variant of Swift is required.
 
 This project provides a pure Swift SDK for interacting with the particle.io cloud services.  The 
 APIs provide access to the following portions of the Particle Cloud
@@ -11,6 +11,8 @@ APIs provide access to the following portions of the Particle Cloud
   * Devices
   * Webhooks
   * Events
+  * Libraries
+  * Firmware 
 
 This project has the following long term goals
 
@@ -169,7 +171,6 @@ Roadmap
 APIs should be relatively stable but are subject to change.  Additional Particle Cloud functionality is being added
 in the following general order
 
-  * Firmware (In Progress)
   * Products (In Progress, mostly complete)
 
 Once complete additional functionality will be added.
