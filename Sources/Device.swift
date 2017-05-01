@@ -56,6 +56,8 @@ public struct DeviceInformation {
         case lastICCID = "last_iccid"
         case imei
         case status
+        case currentBuildTarget = "current_build_target"
+        case defaultBuildTarget = "default_build_target"
     }
     
     /// Device ID
@@ -90,6 +92,12 @@ public struct DeviceInformation {
     
     /// TODO verify (docs don't show); status (known to support "normal")
     public var status: String?
+    
+    /// The current firmware build target
+    public var currentBuildTarget: String?
+    
+    /// The default firmware build target
+    public var defaultBuildTarget: String?
     
     /// Ceate a new device
     public init(deviceID: String, name: String, product: Product) {
@@ -133,6 +141,8 @@ extension DeviceInformation: StringKeyedDictionaryConvertible {
         self.lastICCID = dictionary[DictionaryConstants.lastICCID.rawValue] as? String
         self.IMEI = dictionary[DictionaryConstants.imei.rawValue] as? String
         self.status = dictionary[DictionaryConstants.status.rawValue] as? String
+        self.currentBuildTarget = dictionary[DictionaryConstants.currentBuildTarget.rawValue] as? String
+        self.defaultBuildTarget = dictionary[DictionaryConstants.defaultBuildTarget.rawValue] as? String
     }
     
     /// The device information as a dictionary using keys compatible with the original web service
@@ -149,6 +159,8 @@ extension DeviceInformation: StringKeyedDictionaryConvertible {
             ret[DictionaryConstants.lastICCID.rawValue] = lastICCID
             ret[DictionaryConstants.imei.rawValue] = IMEI
             ret[DictionaryConstants.status.rawValue] = status
+            ret[DictionaryConstants.currentBuildTarget.rawValue] = currentBuildTarget
+            ret[DictionaryConstants.defaultBuildTarget.rawValue] = defaultBuildTarget
             return ret
         }
     }
@@ -168,9 +180,10 @@ public func ==(lhs: DeviceInformation, rhs: DeviceInformation) -> Bool {
         lhs.lastICCID == rhs.lastICCID &&
         lhs.IMEI == rhs.IMEI &&
         lhs.cellular == rhs.cellular &&
-        lhs.status == rhs.status    
+        lhs.status == rhs.status &&
+        lhs.currentBuildTarget == rhs.currentBuildTarget &&
+        lhs.defaultBuildTarget == rhs.defaultBuildTarget
 }
-
 
 /// The detail device information retrieved from /v1/devices/:deviceId
 public struct DeviceDetailInformation {
