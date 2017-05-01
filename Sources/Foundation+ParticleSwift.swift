@@ -145,7 +145,13 @@ extension Scanner {
     
     /// The remaining portion of the scanner's string
     var remainder: String {
-        return self.string.substring(from: self.string.index(self.string.startIndex, offsetBy: self.scanLocation))
+        let utf16 = string.utf16
+        
+        guard let to16 = utf16.index(utf16.startIndex, offsetBy: scanLocation, limitedBy: utf16.endIndex),
+            let to = String.Index(to16, within: string) else {
+                return ""
+        }
+        return string.substring(from: to)
     }
 
     /// Check the next character from the scanner's location
