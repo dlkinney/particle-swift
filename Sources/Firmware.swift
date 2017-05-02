@@ -447,7 +447,7 @@ extension ParticleCloud {
                     }
                     let message = data != nil ? String(data: data!, encoding: String.Encoding.utf8) ?? "" : ""
 
-                    warn("failed to download binary with response: \(String(describing: response))")
+                    warn("failed to flash device with response: \(String(describing: response))")
                     return completion(.failure(ParticleError.flashDeviceFailed(ParticleError.httpResponseParseFailed(message))))
                 }
                 
