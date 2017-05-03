@@ -62,7 +62,7 @@ extension ParticleError: CustomStringConvertible {
         case .callFunctionFailed(let error):
             return "The request to call the function afiled with error: \(error)"
         case .deviceListFailed(let error):
-            return "The request to obtain available devices failled with error: \(error)"
+            return "The request to obtain available devices failed with error: \(error)"
         case .deviceInformationFailed(let deviceID, let error):
             return "The request to obtain device information for device ID \(deviceID) failed with error: \(error)"
         case .deviceDetailedInformationFailed(let error):
@@ -144,7 +144,7 @@ extension ParticleError: CustomStringConvertible {
         case .callFunctionFailed(let error):
             return String.localizedStringWithFormat("The request to call the function afiled with error: %1@", "\(error)")
         case .deviceListFailed(let error):
-            return String.localizedStringWithFormat("The request to obtain available devices failled with error: %1@", "\(error)")
+            return String.localizedStringWithFormat("The request to obtain available devices failed with error: %1@", "\(error)")
         case .deviceInformationFailed(let deviceID, let error):
             return String.localizedStringWithFormat("The request to obtain device information for device ID %1@ failed with error %2@", deviceID, "\(error)")
         case .deviceDetailedInformationFailed(let error):
