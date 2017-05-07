@@ -74,7 +74,25 @@ public struct Product {
     public var requiresActivationCodes: Bool = false
     
     /// The data limit imposed on the product
-    public var mbLimit: Any?
+    public var mbLimit: Int?
+}
+
+extension Product: Equatable {
+    public static func ==(lhs: Product, rhs: Product) -> Bool {
+        return lhs.id == rhs.id &&
+            lhs.name == rhs.name &&
+            lhs.platform == rhs.platform &&
+            lhs.latestFirmwareVersion == rhs.latestFirmwareVersion &&
+            lhs.description == rhs.description &&
+            lhs.type == rhs.type &&
+            lhs.hardwareVersion == rhs.hardwareVersion &&
+            lhs.configId == rhs.configId &&
+            lhs.organization == rhs.organization &&
+            lhs.subscriptionId == rhs.subscriptionId &&
+            lhs.subscriptionId == rhs.subscriptionId &&
+            lhs.requiresActivationCodes == rhs.requiresActivationCodes &&
+            lhs.mbLimit == rhs.mbLimit
+    }
 }
 
 extension Product: StringKeyedDictionaryConvertible {
@@ -123,7 +141,7 @@ extension Product: StringKeyedDictionaryConvertible {
         self.organization = organization
         self.subscriptionId = subscriptionId
         description = dictionary[DictionaryConstants.description.rawValue] as? String ?? ""
-        self.mbLimit = dictionary[DictionaryConstants.mbLimit.rawValue]
+        self.mbLimit = dictionary[DictionaryConstants.mbLimit.rawValue] as? Int
     }
     
     /// The product as a dictionary using keys compatible with the original web service
